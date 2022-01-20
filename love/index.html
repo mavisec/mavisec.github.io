@@ -50,7 +50,7 @@
 	text: null,
 	accessCountimer:null,
 	index:0, // current cursor position
-	speed:2, // speed of the Typer
+	speed:1, // speed of the Typer
 	file:"", //file, must be setted
 	accessCount:0, //times alt is pressed for Access Granted
 	deniedCount:0, //times caps is pressed for Access Denied
@@ -151,8 +151,8 @@ function replaceUrls(text) {
 	return text
 }
 }
-Typer.speed=3;
-Typer.file="/love/jeffweisbein.txt";
+Typer.speed=2;
+Typer.file="/love/rishab.txt";
 Typer.init();
  
 var timer = setInterval("t();", 30);
