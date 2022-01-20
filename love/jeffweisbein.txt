@@ -2,7 +2,6 @@
 <span id="v">Student </span>me = <span id="dsk">mavisec</span>();<br/>
 <span id="v">while</span> (me.<span id="dsk">Alive</span>()) {<br/>
 &nbsp&nbsp&nbspme.<span id="dsk">Sleep</span>();<br/>
-&nbsp&nbsp&nbsp<span id="con">Continue</span>;<br/>
 &nbsp&nbsp&nbspme.<span id="dsk">Eat</span>();<br/>
 &nbsp&nbsp&nbspme.<span id="dsk">Practice</span>();<br/>
 &nbsp&nbsp&nbspme.<span id="dsk">Work</span>();<br/>
