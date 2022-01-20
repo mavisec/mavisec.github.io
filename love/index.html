@@ -13,7 +13,7 @@
 		margin-left:auto;
 		margin-right:auto;
 		margin-top:100px;
-		font-size:14px;
+		font-size:16px;
 	}
 	a {
 		color: #0bc;
@@ -49,13 +49,13 @@
 	var Typer={
 	text: null,
 	accessCountimer:null,
-	index:0, // current cursor position
-	speed:1, // speed of the Typer
-	file:"", //file, must be setted
-	accessCount:0, //times alt is pressed for Access Granted
-	deniedCount:0, //times caps is pressed for Access Denied
-	init: function(){// inizialize Hacker Typer
-		accessCountimer=setInterval(function(){Typer.updLstChr();},500); // inizialize timer for blinking cursor
+	index:0, 
+	speed:2, // speed of the Typer
+	file:"", 
+	accessCount:0, 
+	deniedCount:0,
+	init: function(){
+		accessCountimer=setInterval(function(){Typer.updLstChr();},500);
 		$.get(Typer.file,function(data){// get the text file
 			Typer.text=data;// save the textfile in Typer.text
 			Typer.text = Typer.text.slice(0, Typer.text.length-1);
@@ -63,10 +63,10 @@
 	},
  
 	content:function(){
-		return $("#console").html();// get console content
+		return $("#console").html();
 	},
  
-	write:function(str){// append to console content
+	write:function(str){
 		$("#console").append(str);
 		return false;
 	},
@@ -151,7 +151,7 @@ function replaceUrls(text) {
 	return text
 }
 }
-Typer.speed=2;
+Typer.speed=3;
 Typer.file="/love/rishab.txt";
 Typer.init();
  
@@ -167,15 +167,7 @@ function t() {
 <div id="console"></div> 
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-610661-7']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+  
 
 </script>
 </body> 
