@@ -1,5 +1,5 @@
 <span id="a">mavisec@kali</span>:<span id="c">~</span># cat mavisec.txt<br/><br/>
-<span id="v">Student </span>me = <span id="dsk">mavisec</span>(); {<p>  while (me.Alive()) {</p>
+<span id="v">Student </span>me = <span id="dsk">mavisec</span>(); {<p><span id="v">while</span> (me.<span id="dsk">Alive</span>()) {</p>
 
 <p>I'm the founder and CEO of <a href="http://www.besttechie.com">BestTechie</a> and <a href="https://getkya.com">KYA</a>.</p><!- oqwipjefqwioefjwioqfjoiqwjfeioqwjefoi -->
 <p>I got started with technology at the age of 13 when I convinced my parents to let me use their credit card to buy the BestTechie domain along with some web hosting. I haven't looked back since.</p><!-- owlsqweoifjqwoefijqwoeifjqwoefijwef -->
