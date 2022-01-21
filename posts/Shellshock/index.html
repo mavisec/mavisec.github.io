@@ -202,7 +202,7 @@
 </nav></aside>
         
       
-<p><img src="../../img/posts/shellshock/1.png" alt="image"></p>
+<p><img src="../../img/posts/Shellshock/1.png" alt="image"></p>
 <h2 id="What-is-Shellshock?">What is Shellshock?</h2>
 <p>Shellshock, also known as Bashdoor, is a family of security bugs in the Unix Bash shell, the first of which was disclosed on 24 September 2014. One of the biggest risks involving Shellshock is how easy it is for hackers to exploit. Using only a few lines of code, hackers can potentially give commands to the hardware they’ve targeted without having any authorization or administrative access. Estimates put the total number affected at around 500 million servers in total.
 On 12 September 2014, Stéphane Chazelas informed Bash’s maintainer Chet Ramey of his discovery of the original bug, which he called “Bashdoor”. Working with security experts, Mr. Chazelas developed a patch (fix) for the issue, which by then had been assigned the vulnerability identifier CVE-2014–6271.</p>
@@ -213,7 +213,7 @@ On 12 September 2014, Stéphane Chazelas informed Bash’s maintainer Chet Ramey
 <br/>
 The most likely route of attack is through Web servers utilizing <strong>CGI (Common Gateway Interface)</strong>, the widely-used system for generating dynamic Web content. An attacker can potentially use CGI to send a malformed environment variable to a vulnerable Web server. Because the server uses Bash to interpret the variable, it will also run any malicious command tacked-on to it.</p>
 <figure>
-<p><img src="../../img/posts/Shellshock/1.png" alt="image"></p>
+<p><img src="../../img/posts/Shellshock/2.png" alt="image"></p>
 <figcaption>How a malicious command can be tacked-on to the end of a legitimate environment variable. Bash will run the malicious command first.</figcaption>  
 </figure>
 <p>Oh, that’s scary — what exactly can a hacker can do with this bash thingy? On a scale of 0 to 10 (according to CVSS scoring), this vulnerability has been rated a 10. A hacker can insert something called “environment variables” while the execution happening on your shell. What that means is, a hacker can enter your system, download your entire hard disk on his computer, delete your data, monitor your keystrokes, listen to your microphone and see your web camera.</p>
