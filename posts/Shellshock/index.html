@@ -208,11 +208,11 @@ On 12 September 2014, Stéphane Chazelas informed Bash’s maintainer Chet Ramey
 <br/>
 The most likely route of attack is through Web servers utilizing <strong>CGI (Common Gateway Interface)</strong>, the widely-used system for generating dynamic Web content. An attacker can potentially use CGI to send a malformed environment variable to a vulnerable Web server. Because the server uses Bash to interpret the variable, it will also run any malicious command tacked-on to it.</p>
 
-      
+<div style="text-align: center;">      
 <figure>
-<p><div style="text-align: center;"><img src="../../img/posts/Shellshock/2.png" alt="image" ></div></p>      
+<p><img src="../../img/posts/Shellshock/2.png" alt="image" ></p>      
 <figcaption>How a malicious command can be tacked-on to the end of a legitimate environment variable. Bash will run the malicious command first.</figcaption>  
-</figure>
+</figure></div>
 <p>Oh, that’s scary — what exactly can a hacker can do with this bash thingy? On a scale of 0 to 10 (according to CVSS scoring), this vulnerability has been rated a 10. A hacker can insert something called “environment variables” while the execution happening on your shell. What that means is, a hacker can enter your system, download your entire hard disk on his computer, delete your data, monitor your keystrokes, listen to your microphone and see your web camera.</p>
 
 <h2 id="Impact-and-Potential-IoCs-that-can-be-exploited">Impact and Potential IoCs that can be exploited</h2>
