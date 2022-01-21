@@ -211,9 +211,9 @@ On 12 September 2014, Stéphane Chazelas informed Bash’s maintainer Chet Ramey
 <p>While the vulnerability potentially affects any computer running Bash, it can only be exploited by a remote attacker in certain circumstances. For a successful attack to occur, an attacker needs to force an application to send a malicious environment variable to Bash.
 <br/>
 <br/>
-The most likely route of attack is through Web servers utilizing <strong>CGI (Common Gateway Interface)<strong/>, the widely-used system for generating dynamic Web content. An attacker can potentially use CGI to send a malformed environment variable to a vulnerable Web server. Because the server uses Bash to interpret the variable, it will also run any malicious command tacked-on to it.</p>
+The most likely route of attack is through Web servers utilizing <strong>CGI (Common Gateway Interface)</strong>, the widely-used system for generating dynamic Web content. An attacker can potentially use CGI to send a malformed environment variable to a vulnerable Web server. Because the server uses Bash to interpret the variable, it will also run any malicious command tacked-on to it.</p>
 <figure>
-<p><img src="../../img/posts/boom-bashed/1.png" alt="image"></p>
+<p><img src="../../img/posts/Shellshock/1.png" alt="image"></p>
 <figcaption>How a malicious command can be tacked-on to the end of a legitimate environment variable. Bash will run the malicious command first.</figcaption>  
 </figure>
 <p>Oh, that’s scary — what exactly can a hacker can do with this bash thingy? On a scale of 0 to 10 (according to CVSS scoring), this vulnerability has been rated a 10. A hacker can insert something called “environment variables” while the execution happening on your shell. What that means is, a hacker can enter your system, download your entire hard disk on his computer, delete your data, monitor your keystrokes, listen to your microphone and see your web camera.</p>
@@ -229,10 +229,6 @@ The most likely route of attack is through Web servers utilizing <strong>CGI (Co
   <li>Other situations wherein setting environment occurs across a privilege boundary from Bash execution.</li>
 </ul> 
 
-
-<h2 id="">Patches</h2>
-<p>we can find the user flag in <code>/home/arrexel</code> directory.</p>
-<p><img src="../../img/posts/shellshock/2.png" alt="image"></p>
 <h2 id="Patches">Patches</h2>
 <p>Until 24 September 2014, Bash maintainer Chet Ramey provided a patch version bash43–025 of Bash 4.3 addressing CVE-2014–6271, which was already packaged by distribution maintainers. On 24 September, bash43–026 followed, addressing CVE-2014–7169. Then CVE-2014–7186 was discovered. Florian Weimer from Red Hat posted some patch code for this “unofficially” on 25 September, which Ramey incorporated into Bash as bash43–027. These patches provided code only, helpful only for those who know how to compile (“rebuild”) a new Bash binary executable file from the patch file and remaining source code files.
 
