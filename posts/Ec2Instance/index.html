@@ -179,6 +179,21 @@ figcaption {
 
     <div class="post-content">
       
+  <h2>Table of Contents</h2>
+        <aside class="table-of-contents"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#Step-1">Step 1</a>
+      
+    <li><a href="#Step-2">Step 2</a>
+      
+    <li><a href="#Step-3">Step 3</a>
+      
+    <li><a href="#Step-4">Step 4</a>
+      
+    <li><a href="#Step-5">Step 5</a>
+  
+  </ul>
+</nav></aside>     
       
 <p><img src="../../img/posts/Ec2Instance/1.png" alt="image"></p>
   
@@ -186,11 +201,11 @@ figcaption {
 
 <div style="text-align: center;"><iframe width="660" height="400" src="https://www.youtube.com/embed/dOrSSOcJdZQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
-<h2>Step 1:</h2>
+<h2 id="Step-1">Step 1:</h2>
 
       <p>Connect to your EC2 Linux Instance using SSH.</p>
 
-<h2>Step 2:</h2>
+<h2 id="Step-2">Step 2:</h2>
       
       <p>Confirm if the amazon-linux-extras package has been installed using the ‘which’ command.</p>
 
@@ -203,7 +218,7 @@ figcaption {
 
 <pre><code>$ sudo yum install -y amazon-linux-extras</code></pre>
 
-<h2>Step 3:</h2>      
+<h2 id="Step-3">Step 3:</h2>      
   <p>List the available topics using the following command:</p>
 
 <pre><code>$ amazon-linux-extras</code></pre>
@@ -214,7 +229,7 @@ figcaption {
 </figure>
       
       
-<h2>Step 4:</h2> 
+<h2 id="Step-4">Step 4:</h2> 
   <p>Here I am installing Dnsmasq</p>
  
 <figure>      
@@ -224,10 +239,10 @@ figcaption {
 
 <figure>      
 <p><img src="../../img/posts/Ec2Instance/5.jpeg" alt="image"></p>
-<figcaption># yum clean metadata<br/># yum install dnsmasq</figcaption>    
+<figcaption>enabled</figcaption>    
 </figure> 
       
-<h2>Step 5:</h2> 
+<h2 id="Step-5">Step 5:</h2> 
   <p>Enter the following commands, these will install dnsmasq.</p>
       
 <figure>      
@@ -251,9 +266,9 @@ figcaption {
           <div class="pagination__buttons">
             
               <span class="button previous">
-                <a href="../intro-to-azure-pentesting/index.html">
+                <a href="../Shellshock/">
                   <span class="button__icon">←</span>
-                  <span class="button__text">Introduction to Azure Pentesting ☁️</span>
+                  <span class="button__text">Shellshock (CVE-2014–6271) ⚡</span>
                 </a>
               </span>
             
