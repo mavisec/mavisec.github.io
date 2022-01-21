@@ -213,7 +213,7 @@ On 12 September 2014, Stéphane Chazelas informed Bash’s maintainer Chet Ramey
 <br/>
 The most likely route of attack is through Web servers utilizing <strong>CGI (Common Gateway Interface)</strong>, the widely-used system for generating dynamic Web content. An attacker can potentially use CGI to send a malformed environment variable to a vulnerable Web server. Because the server uses Bash to interpret the variable, it will also run any malicious command tacked-on to it.</p>
 
-<p><img src="../../img/posts/Shellshock/2.png" alt="image"></p>
+<p><img src="../../img/posts/Shellshock/2.png" alt="image" style="width=100%"></p>
 <figure>      
 <figcaption>How a malicious command can be tacked-on to the end of a legitimate environment variable. Bash will run the malicious command first.</figcaption>  
 </figure>
