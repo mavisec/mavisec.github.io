@@ -39,7 +39,12 @@
 <meta property="og:description" content="To install a software package from the Extras Library, first confirm that the amazon-linux-extras repository is installed on your instance. Then, list the available software packages, enable the one you’re looking for, and then install the package using yum." />
 <meta property="og:type" content="article" />
   
-  
+<style>  
+figcaption {
+  font-style: italic;
+  text-align: center;
+}
+</style>   
 
   </head>
   <body class="">
@@ -176,10 +181,10 @@
       
       
 <p><img src="../../img/posts/Ec2Instance/1.png" alt="image"></p>
-
+  
 <p>To install a software package from the Extras Library, first confirm that the amazon-linux-extras repository is installed on your instance. Then, list the available software packages, enable the one you’re looking for, and then install the package using yum.</p>
 
-<div style="text-align: center;"><iframe width="560" height="400" src="https://www.youtube.com/embed/dOrSSOcJdZQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div style="text-align: center;"><iframe width="660" height="400" src="https://www.youtube.com/embed/dOrSSOcJdZQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 <h2>Steps:</h2>
 
@@ -188,8 +193,11 @@
   <li>Confirm if the amazon-linux-extras package has been installed using the ‘which’ command.</li>
 </ol>
 
+<figure>      
 <p><img src="../../img/posts/Ec2Instance/2.jpeg" alt="image"></p>
-
+<figcaption>which amazon-linux-extras</figcaption>    
+</figure>
+    
 <p>If the amazon-linux-extras package has not been installed use the below command to install it :</p>
 
 <pre><code>$ sudo yum install -y amazon-linux-extras</code></pre>
@@ -200,20 +208,31 @@
 
 <pre><code>$ amazon-linux-extras</code></pre>
 
+<figure>    
 <p><img src="../../img/posts/Ec2Instance/3.jpeg" alt="image"></p>
-
+<figcaption>amazon-linux-extras</figcaption>    
+</figure>
+      
+      
 <ol type="1" start="4">
   <li>Here I am installing Dnsmasq</li>
 </ol> 
 
+<figure>      
 <p><img src="../../img/posts/Ec2Instance/4.jpeg" alt="image"></p>
+<figcaption>sudo amazon-linux-extras enable dnsmasq2.85</figcaption>    
+</figure>
+      
 <p><img src="../../img/posts/Ec2Instance/5.jpeg" alt="image"></p>
 
 <ol type="1" start="5">
   <li>Enter the following commands, these will install dnsmasq.</li>
-</ol> 
-
+</ol>
+      
+<figure>      
 <p><img src="../../img/posts/Ec2Instance/6.jpeg" alt="image"></p>
+<figcaption># yum clean metadata<br/># yum install dnsmasq</figcaption>    
+</figure>      
 <br/>
 
 <p>Thanks for reading this post, if you like my work you can support by <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
