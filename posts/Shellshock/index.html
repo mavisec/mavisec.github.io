@@ -38,15 +38,13 @@
 <meta property="og:title" content="Shellshock (CVE-2014–6271)⚡ Here’s what you need to know:" />
 <meta property="og:description" content="Shellshock, also known as Bashdoor, is a family of security bugs in the Unix Bash shell, the first of which was disclosed on 24 September 2014. One of the biggest risks involving Shellshock is how easy it is for hackers to exploit. Using only a few lines of code, hackers can potentially give commands to the hardware they’ve targeted without having any authorization or administrative access. Estimates put the total number affected at around 500 million servers in total." />
 <meta property="og:type" content="article" />
-
-<style>
-.verticalhorizontal {
-    margin-left: auto;
-    margin-right: auto;
-
-}
-</style>
   
+<style>  
+figcaption {
+  font-style: italic;
+  text-align: center;
+}
+</style>  
   </head>
   <body class="">
     <div class="container">
@@ -55,8 +53,7 @@
     <a
   href="../../"
   class="logo"
-  style="text-decoration: none;"
->
+  style="text-decoration: none;">
   
     <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
   <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
@@ -131,8 +128,7 @@
   height="24"
   viewBox="0 0 48 48"
   fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
+  xmlns="http://www.w3.org/2000/svg">
   <path
     d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
@@ -217,8 +213,8 @@ On 12 September 2014, Stéphane Chazelas informed Bash’s maintainer Chet Ramey
 The most likely route of attack is through Web servers utilizing <strong>CGI (Common Gateway Interface)</strong>, the widely-used system for generating dynamic Web content. An attacker can potentially use CGI to send a malformed environment variable to a vulnerable Web server. Because the server uses Bash to interpret the variable, it will also run any malicious command tacked-on to it.</p>
 
 <figure>
-<p style="text-align:center;"><img src="../../img/posts/Shellshock/2.png" alt="image" ></p>      
-<figcaption>How a malicious command can be tacked-on to the end of a legitimate environment variable. Bash will run the malicious command first.</figcaption>  
+<p><img src="../../img/posts/Shellshock/2.png" alt="image" ></p>      
+<figcaption>How a malicious command can be tacked-on to the end of a legitimate environment <br/> variable. Bash will run the malicious command first.</figcaption>  
 </figure>
 
 <p>Oh, that’s scary — what exactly can a hacker can do with this bash thingy? On a scale of 0 to 10 (according to CVSS scoring), this vulnerability has been rated a 10. A hacker can insert something called “environment variables” while the execution happening on your shell. What that means is, a hacker can enter your system, download your entire hard disk on his computer, delete your data, monitor your keystrokes, listen to your microphone and see your web camera.</p>
