@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    
+      <title>
+        mavisec :: posts :: SICKOS: 1.2 Walkthrough
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta
+  name="keywords"
+  content="mavisec, cybersecurity, penetration testing"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="index.html" />
+
+
+
+
+
+<link rel="stylesheet" href="../../assets/style.css" />
+
+
+<link
+  rel="icon"
+  sizes="144x144"
+  href="/img/mavisec-short.png"
+/>
+<link rel="shortcut icon" href="img/mavisec-short.png" />
+
+
+<link href="../../assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+<meta property="og:title" content="SICKOS: 1.2 Walkthrough" />
+<meta property="og:description" content="This is second in following series from SickOs and is independent of the prior releases, scope of challenge is to gain highest privileges on the system." />
+<meta property="og:type" content="article" />
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="../../"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text">
+      mavisec/</span>
+    <span class="logo__text" style="color:red">posts/</span>
+    <span class="logo__cursor"></span>
+
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="../">blog</a></li>
+        
+      
+        
+          <li><a href="../../hacktivity/">hacktivity</a></li>
+        
+      
+        
+          <li><a href="../../resume/">resume</a></li>
+        
+      
+        
+          <li><a href="../../whoami/">whoami</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="../">blog</a></li>
+      
+    
+      
+        <li><a href="../../hacktivity/">hacktivity</a></li>
+      
+    
+      
+        <li><a href="../../resume/">resume</a></li>
+      
+    
+      
+        <li><a href="../../whoami/">whoami</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">SICKOS: 1.2 Walkthrough</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          2021-04-05
+        </span>
+
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="">#OSCP</a>&nbsp;
+        
+          <a href="">#Walkthrough</a>&nbsp;
+        
+          <a href="">#SICKOS</a>&nbsp;
+
+          <a href="">#VulnHub</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+
+  <h2>Table of Contents</h2>
+        <aside class="table-of-contents"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#Description">Description</a></li>
+    <li><a href="#Nmap-Scan">Nmap Scan</a></li>
+      <ul>
+        <li><a href="#Output">Output</a></li>        
+      </ul>
+    <li><a href="#whatweb">Use whatweb</a></li>
+    <li><a href="#browser">Open the IP in browser</a></li>
+    <li><a href="#Dirb">Use Dirb to look for hidden objects</a></li>
+    <li><a href="#http-methods.nse">Use http-methods.nse</a></li>
+    <li><a href="#php-reverse-shell">Copy php-reverse-shell</a></li>
+      <ul>
+        <li><a href="#upload">Upload that php-reverse-shell using curl</a></li> 
+      </ul>
+    <li><a href="#nc">Set a netcat listener</a></li>
+    <li><a href="#nc1">Set a nc listener in new tab</a></li> 
+    <li><a href="#exploit">Exploit</a></li> 
+    <li><a href="#root">Root..!</a></li>
+  </ul>
+</nav></aside>     
+
+
+<h2 id="Description">Description :</h2>     
+<p>This is second in following series from SickOs and is independent of the prior releases, scope of challenge is to gain highest privileges on the system.</p>
+
+<p><img src="../../img/posts/sickos/1.png" alt="image"></p>
+
+<br/>
+
+<h2 id="Nmap-Scan">Nmap Scan :</h2>
+<h3 id="Output">Output :</h3>
+
+<p><img src="../../img/posts/sickos/2.png" alt="image"></p>
+
+<br/>
+
+<h2 id="">Use whatweb :</h2>
+<p><img src="../../img/posts/sickos/3.png" alt="image"></p>
+
+<br/>
+
+<h2 id="IP">Open the IP in browser :</h2>
+<p><img src="../../img/posts/sickos/4.png" alt="image"></p>
+
+<br/>
+
+<h2 id="Dirb">Use Dirb to look for hidden objects :</h2>
+<pre><code>You will find <ip>/test.</code></pre>
+
+<br/>
+
+<h2 id="http-methods.nse">Use http-methods.nse :</h2>
+<pre><code>Finds out what options are supported by an HTTP server by sending an OPTIONS request. Lists potentially risky methods.</code></pre>
+
+<br/>
+
+<h2 id="php-reverse-shell">Copy php-reverse-shell so that we can use it :</h2>
+<p><img src="../../img/posts/sickos/5.png" alt="image"></p>
+
+<br/>
+
+<h2 id="php-reverse-shell">Upload that php-reverse-shell using curl (change IP (your IP) and port (443)) :</h2>
+<p><img src="../../img/posts/sickos/6.png" alt="image"></p>
+
+<p>You will see that our exploit is uploaded :</p>
+<p><img src="../../img/posts/sickos/7.png" alt="image"></p>
+
+<br/>
+
+<h2 id="nc">Set a netcat listener and open the exploit in the browser :</h2>
+<p><img src="../../img/posts/sickos/8.png" alt="image"></p>
+
+<br/>
+
+<h3 id="nc1">Set a nc listener in new tab :</h3>
+<p><img src="../../img/posts/sickos/9.png" alt="image"></p>
+
+<br/>
+
+<h3 id="exploit">Make an exploit :</h3>
+<p><img src="../../img/posts/sickos/10.png" alt="image"></p>
+
+<p>Give it executable permissions :</p>
+<p><img src="../../img/posts/sickos/11.png" alt="image"></p>
+
+<br/>
+
+<h2 id="root">You will get be root in the new shell :</h2>
+<p><img src="../../img/posts/sickos/11.png" alt="image"></p>
+
+<br/>
+
+<p>Thanks for reading this post, if you like my work you can support by <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="../Curl/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Upload Files Using CURL</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="../shellshock/index.html">
+                  <span class="button__text">Bash and the Shellshock ⚡️</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </div>
+
+      </div>
+
+      
+       <footer class="footer">
+  <div class="footer__inner">
+    
+      
+      <div class="copyright">
+        <span> 
+          © 2021-2022
+        </span>
+      </div>
+      <div>       
+        <span>
+          <a href="https://creativecommons.org/licenses/by-nc/4.0/" target=”_blank”>license</a>
+        </span>
+      </div>
+
+    
+  </div>
+</footer>
+
+<script src="../../assets/main.js"></script>
+<script src="../../assets/prism.js"></script>
+      
+    </div>
+
+  </body>
+
+</html>
