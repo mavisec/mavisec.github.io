@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    
+      <title>
+        mavisec :: posts :: Enterprise TryHackMe Walkthrough
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta
+  name="keywords"
+  content="mavisec, cybersecurity, penetration testing"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="index.html" />
+
+
+
+
+
+<link rel="stylesheet" href="../../assets/style.css" />
+
+
+<link
+  rel="icon"
+  sizes="144x144"
+  href="/img/mavisec-short.png"
+/>
+<link rel="shortcut icon" href="img/mavisec-short.png" />
+
+
+<link href="../../assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+<meta property="og:title" content="Upload Files Using CURL" />
+<meta property="og:description" content="CURL is a command line tool to transfer data to or from a server, using any of the supported protocols (HTTP, FTP, IMAP, POP3, SCP, SFTP, SMTP, TFTP, TELNET, LDAP or FILE)." />
+<meta property="og:type" content="article" />
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="../../"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text">
+      mavisec/</span>
+    <span class="logo__text" style="color:red">posts/</span>
+    <span class="logo__cursor"></span>
+
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="../">blog</a></li>
+        
+      
+        
+          <li><a href="../../hacktivity/">hacktivity</a></li>
+        
+      
+        
+          <li><a href="../../resume/">resume</a></li>
+        
+      
+        
+          <li><a href="../../whoami/">whoami</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="../">blog</a></li>
+      
+    
+      
+        <li><a href="../../hacktivity/">hacktivity</a></li>
+      
+    
+      
+        <li><a href="../../resume/">resume</a></li>
+      
+    
+      
+        <li><a href="../../whoami/">whoami</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">TryHackMe Enterprise Walktrough</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          2022-26-01
+        </span>
+
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="">#ActiveDirectory</a>&nbsp;
+        
+          <a href="">#Windows</a>&nbsp;
+        
+          <a href="">#TryHackMe</a>&nbsp;
+        
+          <a href="">#Kerberoasting</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+
+  <h2>Table of Contents</h2>
+        <aside class="table-of-contents"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#port">Port 7990</a></li>
+    <li><a href="#Kerberoasting">Kerberoasting</a></li>
+    <li><a href="#rdp">Port 3389</a></li>
+      <ul>
+        <li><a href="#PE">Privilege Escalation with PowerUp</a></li>
+        <li><a href="#payload">Creating a Payload</a></li>
+        <li><a href="#transfer">Transfer the Payload</a></li>
+        <li><a href="#restart">Restart the Service</a></li>
+      </ul>
+    <li><a href="#root">We are Root..!</a></li>
+  </ul>
+</nav></aside>     
+
+      
+<p><img src="../../img/posts/boom-bashed/1.png" alt="image"></p>
+
+<p>CURL is a command line tool to transfer data to or from a server, using any of the supported protocols (HTTP, FTP, IMAP, POP3, SCP, SFTP, SMTP, TFTP, TELNET, LDAP or FILE).</p>
+
+
+<h2 id="nmap">Nmap Scan:</h2>
+
+<pre><code>Enumeration 
+
+Nmap scan report for 10.10.204.72
+Host is up (0.20s latency).
+Not shown: 65487 closed tcp ports (conn-refused)
+PORT      STATE    SERVICE        VERSION
+53/tcp    open     domain         Simple DNS Plus
+80/tcp    open     http           Microsoft IIS httpd 10.0
+|_http-title: Site doesn't have a title (text/html).
+|_http-server-header: Microsoft-IIS/10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+88/tcp    open     kerberos-sec   Microsoft Windows Kerberos (server time: 2022-01-26 12:26:23Z)
+135/tcp   open     msrpc          Microsoft Windows RPC
+139/tcp   open     netbios-ssn    Microsoft Windows netbios-ssn
+389/tcp   open     ldap           Microsoft Windows Active Directory LDAP (Domain: ENTERPRISE.THM0., Site: Default-First-Site-Name)
+445/tcp   open     microsoft-ds?
+464/tcp   open     kpasswd5?
+536/tcp   filtered opalis-rdv
+593/tcp   open     ncacn_http     Microsoft Windows RPC over HTTP 1.0
+636/tcp   open     tcpwrapped
+3268/tcp  open     ldap           Microsoft Windows Active Directory LDAP (Domain: ENTERPRISE.THM0., Site: Default-First-Site-Name)
+3269/tcp  open     tcpwrapped
+3389/tcp  open     ms-wbt-server  Microsoft Terminal Services
+|_ssl-date: 2022-01-26T12:27:25+00:00; 0s from scanner time.
+| ssl-cert: Subject: commonName=LAB-DC.LAB.ENTERPRISE.THM
+| Not valid before: 2022-01-25T11:17:11
+|_Not valid after:  2022-07-27T11:17:11
+| rdp-ntlm-info: 
+|   Target_Name: LAB-ENTERPRISE
+|   NetBIOS_Domain_Name: LAB-ENTERPRISE
+|   NetBIOS_Computer_Name: LAB-DC
+|   DNS_Domain_Name: LAB.ENTERPRISE.THM
+|   DNS_Computer_Name: LAB-DC.LAB.ENTERPRISE.THM
+|   DNS_Tree_Name: ENTERPRISE.THM
+|   Product_Version: 10.0.17763
+|_  System_Time: 2022-01-26T12:27:14+00:00
+5357/tcp  open     http           Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Service Unavailable
+5985/tcp  open     http           Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+6716/tcp  filtered princity-agent
+6738/tcp  filtered unknown
+7990/tcp  open     http           Microsoft IIS httpd 10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: Log in to continue - Log in with Atlassian account
+9389/tcp  open     mc-nmf         .NET Message Framing
+10280/tcp filtered unknown
+15665/tcp filtered unknown
+17762/tcp filtered unknown
+19936/tcp filtered unknown
+23025/tcp filtered unknown
+27177/tcp filtered unknown
+28349/tcp filtered unknown
+30405/tcp filtered unknown
+31038/tcp filtered unknown
+36586/tcp filtered unknown
+41911/tcp filtered unknown
+44105/tcp filtered unknown
+46069/tcp filtered unknown
+47001/tcp open     http           Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+49664/tcp open     msrpc          Microsoft Windows RPC
+49665/tcp open     msrpc          Microsoft Windows RPC
+49666/tcp open     msrpc          Microsoft Windows RPC
+49668/tcp open     ncacn_http     Microsoft Windows RPC over HTTP 1.0
+49669/tcp open     msrpc          Microsoft Windows RPC
+49670/tcp open     msrpc          Microsoft Windows RPC
+49672/tcp open     msrpc          Microsoft Windows RPC
+49676/tcp open     msrpc          Microsoft Windows RPC
+49703/tcp open     msrpc          Microsoft Windows RPC
+49713/tcp open     msrpc          Microsoft Windows RPC
+49842/tcp open     msrpc          Microsoft Windows RPC
+50038/tcp filtered unknown
+50358/tcp filtered unknown
+54013/tcp filtered unknown
+Service Info: Host: LAB-DC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-time: 
+|   date: 2022-01-26T12:27:16
+|_  start_date: N/A
+| smb2-security-mode: 
+|   3.1.1: 
+|_    Message signing enabled and required</code></pre>
+
+<br/>
+
+<h2 id="port">Port 7990:</h2>
+<p>At http://lab.enterprise.thm:7990 I found this</p>
+<p><img src="../../img/posts/enterprise/1.png" alt="image"></p>
+
+<br/>
+
+<p>Use google and search for "Enterprise-THM". I found a person "Nik-enterprise-dev". He has a repository called "mgmtScript.ps1"<br/>If we look at the past commits we can see credentials in clear text.</p>
+
+<p><img src="../../img/posts/enterprise/2.png" alt="image"></p>
+
+<h2 id="Kerberoasting">Kerberoasting:</h2>
+
+<p>We can't login via RDP so I decided to try Kerberoasting.</p>
+<p><img src="../../img/posts/enterprise/3.png" alt="image"></p>
+<p>Now let's crack the hash</p>
+<p><img src="../../img/posts/enterprise/4.png" alt="image"></p>
+
+
+<br/>
+
+<h2 id="rdp">Port 3389:</h2>
+<p>Now let's login with the user bickbucket</p>
+<p><img src="../../img/posts/enterprise/5.png" alt="image"></p>
+
+<h3 id="PE">Privilege Escalation with PowerUp:</h2>
+<p>Transfer the PowerUp.ps1 and run <code>Invoke-AllChecks</code></p>
+<p>We find an “unquoted service path”</p>
+<p><img src="../../img/posts/enterprise/6.png" alt="image"></p>
+
+<h3 id="payload">Creating a Payload:</h3>
+<p><img src="../../img/posts/enterprise/7.png" alt="image"></p>
+
+<h3 id="transfer">Transfer the Payload:</h3>
+<p><img src="../../img/posts/enterprise/8.png" alt="image"></p>
+
+<h3 id="stop">Restart the Service:</h3>
+<pre><code>Stop-Service -name 'zerotieroneservice'<br/>Start-Service -name 'zerotieroneservice'</code></pre>
+
+<h2 id="root">We are Root..!</h2>
+<p><img src="../../img/posts/enterprise/9.png" alt="image"></p>
+
+<p>Thanks for reading this post, if you like my work you can support by <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="../intro-to-azure-pentesting/index.html">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Introduction to Azure Pentesting ☁️</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="../shellshock/index.html">
+                  <span class="button__text">Bash and the Shellshock ⚡️</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </div>
+
+      </div>
+
+      
+       <footer class="footer">
+  <div class="footer__inner">
+    
+      
+      <div class="copyright">
+        <span> 
+          © 2021-2022
+        </span>
+      </div>
+      <div>       
+        <span>
+          <a href="https://creativecommons.org/licenses/by-nc/4.0/" target=”_blank”>license</a>
+        </span>
+      </div>
+
+    
+  </div>
+</footer>
+
+<script src="../../assets/main.js"></script>
+<script src="../../assets/prism.js"></script>
+      
+    </div>
+
+  </body>
+
+</html>
