@@ -294,15 +294,15 @@ Host script results:
 <br/>
 
 <h2 id="port">Port 7990:</h2>
-<p>At http://lab.enterprise.thm:7990 I found this</p>
+<p>At <code>http://lab.enterprise.thm:7990</code> I found this</p>
 <p><img src="../../img/posts/Enterprise/1.png" alt="image"></p>
 
-<br/>
-
-<p>Use google and search for "Enterprise-THM". I found a person "Nik-enterprise-dev". He has a repository called "mgmtScript.ps1"<br/>If we look at the past commits we can see credentials in clear text.</p>
+<p>Use google and search for <code>Enterprise-THM</code>. I found a person "Nik-enterprise-dev". He has a repository called <code>mgmtScript.ps1</code><br/>If we look at the past commits we can see credentials in clear text.</p>
 
 <p><img src="../../img/posts/Enterprise/2.png" alt="image"></p>
 
+<br/>
+      
 <h2 id="Kerberoasting">Kerberoasting:</h2>
 
 <p>We can't login via RDP so I decided to try Kerberoasting.</p>
@@ -318,7 +318,7 @@ Host script results:
 <p><img src="../../img/posts/Enterprise/5.png" alt="image"></p>
 
 <h3 id="PE">Privilege Escalation with PowerUp:</h2>
-<p>Transfer the PowerUp.ps1 and run <code>Invoke-AllChecks</code></p>
+<p>Transfer the <code>PowerUp.ps1</code> and run <code>Invoke-AllChecks</code></p>
 <p>We find an “unquoted service path”</p>
 <p><img src="../../img/posts/Enterprise/6.png" alt="image"></p>
 
