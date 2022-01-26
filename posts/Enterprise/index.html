@@ -186,7 +186,7 @@
     <li><a href="#rdp">Port 3389</a></li>
       <ul>
         <li><a href="#PE">Privilege Escalation with PowerUp</a></li>
-        <li><a href="#payload">Creating a Payload</a></li>
+        <li><a href="#payload">Create a Payload</a></li>
         <li><a href="#transfer">Transfer the Payload</a></li>
         <li><a href="#restart">Restart the Service</a></li>
       </ul>
@@ -307,22 +307,22 @@ Host script results:
 
 <p>We can't login via RDP so I decided to try Kerberoasting.</p>
 <p><img src="../../img/posts/Enterprise/3.png" alt="image"></p>
-<p>Now let's crack the hash</p>
+<p>Now let's crack the hash.</p>
 <p><img src="../../img/posts/Enterprise/4.png" alt="image"></p>
 
 
 <br/>
 
 <h2 id="rdp">Port 3389:</h2>
-<p>Now let's login with the user bickbucket</p>
+<p>Now let's login with the user bickbucket.</p>
 <p><img src="../../img/posts/Enterprise/5.png" alt="image"></p>
 
 <h3 id="PE">Privilege Escalation with PowerUp:</h2>
 <p>Transfer the <code>PowerUp.ps1</code> and run <code>Invoke-AllChecks</code></p>
-<p>We find an “unquoted service path”</p>
+<p>We find an <code>unquoted service path</code>.</p>
 <p><img src="../../img/posts/Enterprise/6.png" alt="image"></p>
 
-<h3 id="payload">Creating a Payload:</h3>
+<h3 id="payload">Create a Payload:</h3>
 <p><img src="../../img/posts/Enterprise/7.png" alt="image"></p>
 
 <h3 id="transfer">Transfer the Payload:</h3>
