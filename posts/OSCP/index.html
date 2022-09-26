@@ -218,41 +218,6 @@
 
 <br/>
 
-<p>Use google and search for "Enterprise-THM". I found a person "Nik-enterprise-dev". He has a repository called "mgmtScript.ps1"<br/>If we look at the past commits we can see credentials in clear text.</p>
-
-<p><img src="../../img/posts/enterprise/2.png" alt="image"></p>
-
-<h2 id="Kerberoasting">Kerberoasting:</h2>
-
-<p>We can't login via RDP so I decided to try Kerberoasting.</p>
-<p><img src="../../img/posts/enterprise/3.png" alt="image"></p>
-<p>Now let's crack the hash</p>
-<p><img src="../../img/posts/enterprise/4.png" alt="image"></p>
-
-
-<br/>
-
-<h2 id="rdp">Port 3389:</h2>
-<p>Now let's login with the user bickbucket</p>
-<p><img src="../../img/posts/enterprise/5.png" alt="image"></p>
-
-<h3 id="PE">Privilege Escalation with PowerUp:</h2>
-<p>Transfer the PowerUp.ps1 and run <code>Invoke-AllChecks</code></p>
-<p>We find an “unquoted service path”</p>
-<p><img src="../../img/posts/enterprise/6.png" alt="image"></p>
-
-<h3 id="payload">Creating a Payload:</h3>
-<p><img src="../../img/posts/enterprise/7.png" alt="image"></p>
-
-<h3 id="transfer">Transfer the Payload:</h3>
-<p><img src="../../img/posts/enterprise/8.png" alt="image"></p>
-
-<h3 id="stop">Restart the Service:</h3>
-<pre><code>Stop-Service -name 'zerotieroneservice'<br/>Start-Service -name 'zerotieroneservice'</code></pre>
-
-<h2 id="root">We are Root..!</h2>
-<p><img src="../../img/posts/enterprise/9.png" alt="image"></p>
-
 <p>Thanks for reading this post, if you like my work you can support by <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
 
     </div>
