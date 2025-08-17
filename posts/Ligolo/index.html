@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    
+      <title>
+        mavisec :: posts :: 🚀 How Ligolo-ng Helped Me Pass the OSCP
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta
+  name="keywords"
+  content="mavisec, cybersecurity, penetration testing, oscp, ligolo, pivoting"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="index.html" />
+
+<link rel="stylesheet" href="../../assets/style.css" />
+
+<link
+  rel="icon"
+  sizes="144x144"
+  href="/img/mavisec-short.png"
+/>
+<link rel="shortcut icon" href="img/mavisec-short.png" />
+
+<link href="../../assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+<meta property="og:title" content="🚀 How Ligolo-ng Helped Me Pass the OSCP" />
+<meta property="og:description" content="Ligolo-ng was one of the key tools that helped me crack the OSCP. Here’s how I used it for pivoting, port forwarding, and tunneling during the exam." />
+<meta property="og:type" content="article" />
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="../../"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text">
+      mavisec/</span>
+    <span class="logo__text" style="color:red">posts/</span>
+    <span class="logo__cursor"></span>
+
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    <li><a href="../">blog</a></li>
+    <li><a href="../../hacktivity/">hacktivity</a></li>
+    <li><a href="../../resume/">resume</a></li>
+    <li><a href="../../whoami/">whoami</a></li>
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    <li><a href="../">blog</a></li>
+    <li><a href="../../hacktivity/">hacktivity</a></li>
+    <li><a href="../../resume/">resume</a></li>
+    <li><a href="../../whoami/">whoami</a></li>
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+      <div class="content">
+  
+  <div class="post">
+    <h1 class="post-title">🚀 How Ligolo-ng Helped Me Pass the OSCP</h1>
+    <div class="post-meta">
+        <span class="post-date">
+          2025-08-17
+        </span>
+    </div>
+
+    <span class="post-tags">
+      <a href="">#OSCP</a>&nbsp;
+      <a href="">#Ligolo</a>&nbsp;
+      <a href="">#Pivoting</a>&nbsp;
+      <a href="">#TryHarder</a>&nbsp;
+    </span>
+
+    <div class="post-content">
+
+<p>When preparing for my OSCP, one of the biggest challenges I anticipated was <strong>pivoting inside internal networks</strong>. The updated exam format almost always requires moving laterally, and doing this manually with <code>sshuttle</code> or <code>proxychains</code> can be messy.</p>
+
+<p>That’s where <strong>Ligolo-ng</strong> came in. Honestly, learning this tool was one of the best decisions I made during prep—it simplified pivoting so much that I was able to focus more on exploitation instead of fighting with tunneling setups.</p>
+
+<hr />
+
+<h2>🔹 What is Ligolo-ng?</h2>
+<p>Ligolo-ng is a <strong>reverse tunneling tool</strong> written in Go. Think of it as a modern version of socat/chisel but faster, more stable, and perfect for OSCP-style pivoting.</p>
+<ul>
+  <li>SOCKS tunneling (so you can proxy Nmap, RDP, SMB, etc.)</li>
+  <li>Local and remote port forwarding</li>
+  <li>Lightweight agent, easy deployment</li>
+  <li>Stable (no random breaks mid-exam 👀)</li>
+</ul>
+
+<hr />
+
+<h2>🔹 Basic Setup</h2>
+<p>You need two things:</p>
+<ol>
+  <li><strong>Proxy (server)</strong> – runs on your Kali</li>
+  <li><strong>Agent (client)</strong> – runs on the compromised host</li>
+</ol>
+
+<h3>Step 1: Start the Proxy</h3>
+<pre><code>ligolo-proxy -selfcert
+</code></pre>
+
+<h3>Step 2: Run the Agent on Target</h3>
+<pre><code>./ligolo-agent -connect YOUR_IP:11601
+</code></pre>
+
+<h3>Step 3: Connect via CLI</h3>
+<pre><code>ligolo-cli
+session
+</code></pre>
+
+<hr />
+
+<h2>🔹 Local & Remote Port Forwarding</h2>
+
+<h3>Local Port Forwarding (access internal services)</h3>
+<pre><code>listener_add --addr 127.0.0.1:445 --to 192.168.100.10:445
+</code></pre>
+
+<h3>Remote Port Forwarding (expose Kali service inside)</h3>
+<pre><code>listener_add --addr 192.168.100.50:80 --to 127.0.0.1:80
+</code></pre>
+
+<hr />
+
+<h2>🔹 SOCKS Proxy (My Favorite Feature)</h2>
+<pre><code>tunnel_start --socks
+</code></pre>
+
+<p>Then update <code>/etc/proxychains4.conf</code>:</p>
+<pre><code>socks5 127.0.0.1 1080
+</code></pre>
+
+<p>Now you can pivot scans:</p>
+<pre><code>proxychains nmap -sT -Pn -n -p445 192.168.100.10
+proxychains rdesktop 192.168.100.20
+</code></pre>
+
+<hr />
+
+<h2>🔹 Why Ligolo Helped Me Pass</h2>
+<p>During the exam, I had to pivot into an internal subnet. Normally, that would’ve cost me 30+ minutes setting up SSH tunnels. With Ligolo, I had a SOCKS proxy up in <strong>5 minutes</strong>. That time saved let me focus on actually hacking, not tunneling.</p>
+
+<p>Honestly, if you’re going for the OSCP, <strong>mastering Ligolo-ng is a must</strong>. It was one of the key tools that got me through the exam’s pivoting requirements.</p>
+
+<hr />
+
+<p>✅ <strong>Final Tip</strong>: Don’t wait for exam day. Practice Ligolo in labs so it becomes second nature.</p>
+
+<p>Thanks for reading this post! If you like my work, you can support me by <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
+
+    </div>
+    
+    <div class="pagination">
+      <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+      </div>
+      <div class="pagination__buttons">
+        <span class="button previous">
+          <a href="../CVE-2016–2098/">
+            <span class="button__icon">←</span>
+            <span class="button__text">CVE-2016–2098 💎</span>
+          </a>
+        </span>
+        <span class="button next">
+          <a href="../sickos/">
+            <span class="button__text">SICKOS: 1.2 Walkthrough 🤒</span>
+            <span class="button__icon">→</span>
+          </a>
+        </span>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="copyright">
+      <span>© 2021-2025</span>
+    </div>
+    <div>       
+      <span>
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">license</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/main.js"></script>
+<script src="../../assets/prism.js"></script>
+      
+    </div>
+  </body>
+</html>
