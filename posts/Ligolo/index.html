@@ -177,25 +177,10 @@ session
 
 <hr />
 
-<h2>🔹 SOCKS Proxy (My Favorite Feature)</h2>
-<pre><code>tunnel_start --socks
-</code></pre>
-
-<p>Then update <code>/etc/proxychains4.conf</code>:</p>
-<pre><code>socks5 127.0.0.1 1080
-</code></pre>
-
-<p>Now you can pivot scans:</p>
-<pre><code>proxychains nmap -sT -Pn -n -p445 192.168.100.10
-proxychains rdesktop 192.168.100.20
-</code></pre>
-
-<hr />
-
 <h2>🔹 Why Ligolo Helped Me Pass</h2>
-<p>During the exam, I had to pivot into an internal subnet. Normally, that would’ve cost me 30+ minutes setting up SSH tunnels. With Ligolo, I had a SOCKS proxy up in <strong>5 minutes</strong>. That time saved let me focus on actually hacking, not tunneling.</p>
+<p>One of the biggest challenges in long exams like the OSCP is managing time effectively, and that’s where Ligolo really made the difference for me. Instead of fighting with clunky tunneling setups or juggling multiple tools, I had a single, reliable solution that just worked when I needed it to.</p>
 
-<p>Honestly, if you’re going for the OSCP, <strong>mastering Ligolo-ng is a must</strong>. It was one of the key tools that got me through the exam’s pivoting requirements.</p>
+<p>Ligolo-ng was fast to set up, stable during use, and flexible enough to handle both SOCKS proxying and simple port forwarding with ease. Its simplicity kept my workflow clean and reduced stress, letting me focus on the important parts—exploitation and documentation. In the end, it wasn’t just a pivoting tool, it was a genuine time-saver and sanity-saver, which helped me cross the finish line.</p>
 
 <hr />
 
@@ -248,3 +233,4 @@ proxychains rdesktop 192.168.100.20
     </div>
   </body>
 </html>
+
