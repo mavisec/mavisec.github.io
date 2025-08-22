@@ -105,24 +105,24 @@
 
   <script>
     // Terminal intro text
-    const terminal = document.getElementById("terminal");
-    const introLines = [
-      "Scanning target: [Her Name]",
-      "Vulnerability detected: Single ❤️",
-      "Exploit available: Dinner + Movie",
-      "Deploying payload..."
-    ];
-    let i = 0;
-    function typeLine() {
-      if (i < introLines.length) {
-        terminal.innerHTML += introLines[i] + "\\n";
-        i++;
-        setTimeout(typeLine, 1200);
-      } else {
-        document.getElementById("proposal").classList.remove("hidden");
-      }
-    }
-    setTimeout(typeLine, 1000);
+const terminal = document.getElementById("terminal");
+const introLines = [
+  "Scanning target: [Her Name]",
+  "Vulnerability detected: Single ❤️",
+  "Exploit available: Dinner + Movie",
+  "Deploying payload..."
+];
+let i = 0;
+function typeLine() {
+  if (i < introLines.length) {
+    terminal.innerHTML += introLines[i] + "<br>";
+    i++;
+    setTimeout(typeLine, 1200);
+  } else {
+    document.getElementById("proposal").classList.remove("hidden");
+  }
+}
+setTimeout(typeLine, 1000);
 
     // Moving Deny Button
     const denyBtn = document.getElementById("deny");
@@ -213,3 +213,4 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
+
