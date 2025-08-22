@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Date Proposal - Access Request</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff99;
+      font-family: "Courier New", monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .hidden { display: none; }
+    button {
+      background: black;
+      color: #00ff99;
+      border: 1px solid #00ff99;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #00ff99;
+      color: black;
+    }
+    #deny {
+      position: relative;
+    }
+    .form-step {
+      margin: 15px 0;
+    }
+    input, select {
+      background: black;
+      color: #00ff99;
+      border: 1px solid #00ff99;
+      padding: 5px;
+      font-family: "Courier New", monospace;
+    }
+    #results {
+      border: 1px solid #00ff99;
+      padding: 20px;
+      margin-top: 20px;
+      background: rgba(0, 255, 100, 0.05);
+      width: 80%;
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Initializing...</h1>
+  <pre id="terminal"></pre>
+
+  <div id="proposal" class="hidden">
+    <h2>🔐 Authorization Request: Will you go on a date with me?</h2>
+    <button id="accept">Grant Access ✅</button>
+    <button id="deny">Deny ❌</button>
+  </div>
+
+  <form id="steps" class="hidden">
+    <div class="form-step">
+      📅 Date & Time: <input type="datetime-local" id="dateTime" required>
+    </div>
+    <div class="form-step">
+      🍕 Choose Food:
+      <select id="food">
+        <option>Pizza</option>
+        <option>Sushi</option>
+        <option>Burgers</option>
+        <option>Indian</option>
+      </select>
+    </div>
+    <div class="form-step">
+      🎬 Choose Movie:
+      <select id="movie">
+        <option>Inception</option>
+        <option>Interstellar</option>
+        <option>Avengers</option>
+        <option>Your Pick ❤️</option>
+      </select>
+    </div>
+    <div class="form-step">
+      😍 Excitement Level:
+      <input type="range" id="excitement" min="0" max="100" value="50">
+      <span id="exciteValue">50%</span>
+    </div>
+    <button type="submit">Submit ✅</button>
+  </form>
+
+  <div id="results" class="hidden"></div>
+  <canvas id="confetti"></canvas>
+
+  <script>
+    // Terminal intro text
+    const terminal = document.getElementById("terminal");
+    const introLines = [
+      "Scanning target: [Her Name]",
+      "Vulnerability detected: Single ❤️",
+      "Exploit available: Dinner + Movie",
+      "Deploying payload..."
+    ];
+    let i = 0;
+    function typeLine() {
+      if (i < introLines.length) {
+        terminal.innerHTML += introLines[i] + "\\n";
+        i++;
+        setTimeout(typeLine, 1200);
+      } else {
+        document.getElementById("proposal").classList.remove("hidden");
+      }
+    }
+    setTimeout(typeLine, 1000);
+
+    // Moving Deny Button
+    const denyBtn = document.getElementById("deny");
+    denyBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 100 - 50;
+      denyBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Accept -> Show Form
+    document.getElementById("accept").addEventListener("click", () => {
+      document.getElementById("proposal").classList.add("hidden");
+      document.getElementById("steps").classList.remove("hidden");
+    });
+
+    // Excitement slider value
+    const excitement = document.getElementById("excitement");
+    const exciteValue = document.getElementById("exciteValue");
+    excitement.addEventListener("input", () => {
+      exciteValue.textContent = excitement.value + "%";
+    });
+
+    // Form submit -> Show results
+    document.getElementById("steps").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const dateTime = document.getElementById("dateTime").value;
+      const food = document.getElementById("food").value;
+      const movie = document.getElementById("movie").value;
+      const excitementLevel = document.getElementById("excitement").value;
+      const results = `
+[+] Date Selected: ${dateTime}
+[+] Food Choice: ${food}
+[+] Movie Choice: ${movie}
+[+] Excitement Level: ${excitementLevel}%
+STATUS: Exploit Successful ❤️
+      `;
+      document.getElementById("steps").classList.add("hidden");
+      document.getElementById("results").classList.remove("hidden");
+      document.getElementById("results").innerText = results;
+      launchConfetti();
+    });
+
+    // Confetti
+    const confettiCanvas = document.getElementById("confetti");
+    const ctx = confettiCanvas.getContext("2d");
+    let confettiParticles = [];
+    function resizeCanvas() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    function launchConfetti() {
+      confettiParticles = [];
+      for (let i = 0; i < 150; i++) {
+        confettiParticles.push({
+          x: Math.random() * confettiCanvas.width,
+          y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+          r: Math.random() * 6 + 2,
+          d: Math.random() * 150 + 50,
+          color: `hsl(${Math.random()*360},100%,50%)`,
+          tilt: Math.random() * 10 - 10
+        });
+      }
+      requestAnimationFrame(drawConfetti);
+    }
+    function drawConfetti() {
+      ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+      confettiParticles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, false);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+      updateConfetti();
+      requestAnimationFrame(drawConfetti);
+    }
+    function updateConfetti() {
+      confettiParticles.forEach(p => {
+        p.y += Math.cos(p.d) + 2 + p.r/2;
+        p.x += Math.sin(p.d);
+        if (p.y > confettiCanvas.height) {
+          p.y = -10;
+          p.x = Math.random() * confettiCanvas.width;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
