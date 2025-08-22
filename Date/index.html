@@ -152,13 +152,26 @@
 
     // Deny button hover
     const denyBtn = document.getElementById("deny");
-    denyBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 100 - 50;
-      const rotate = Math.random() * 30 - 15;
-      denyBtn.style.transition = "transform 0.3s ease";
-      denyBtn.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
-    });
+    function spawnFakeDenies() {
+  for (let i = 0; i < 2; i++) { // spawn 2 fake buttons
+    const fake = denyBtn.cloneNode(true); // copy deny button
+    fake.style.position = "absolute";
+    fake.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    fake.style.top = Math.random() * (window.innerHeight - 50) + "px";
+    fake.id = "fakeDeny" + Math.random().toString(36).substr(2, 5); // unique ID
+    fake.addEventListener("mouseover", () => fake.remove()); // remove on hover
+    document.body.appendChild(fake);
+  }
+}
+denyBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 100 - 50;
+  const rotate = Math.random() * 30 - 15;
+  denyBtn.style.transition = "transform 0.3s ease";
+  denyBtn.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+  
+  spawnFakeDenies(); // add this line to spawn fake buttons
+});
 
     // Accept -> Show form
     document.getElementById("accept").addEventListener("click", () => {
@@ -245,3 +258,4 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
+
