@@ -85,7 +85,9 @@
     <button id="accept">Grant Access ✅</button>
     <button id="deny">Deny ❌</button>
   </div>
-
+<div id="progress" class="hidden">
+  ⏳ Deploying Access: [<span id="progressBar"></span>                    ]
+</div>
   <form id="steps" class="hidden">
     <div class="form-step">
 📅 Date: <input type="date" id="dateTime" required>
@@ -174,10 +176,24 @@ denyBtn.addEventListener("mouseover", () => {
 });
 
     // Accept -> Show form
-    document.getElementById("accept").addEventListener("click", () => {
-      document.getElementById("proposal").classList.add("hidden");
+document.getElementById("accept").addEventListener("click", () => {
+  document.getElementById("proposal").classList.add("hidden");
+  const progressDiv = document.getElementById("progress");
+  const progressBar = document.getElementById("progressBar");
+  progressDiv.classList.remove("hidden");
+
+  let barLength = 0;
+  const totalLength = 20; // number of hashes
+  const interval = setInterval(() => {
+    barLength++;
+    progressBar.textContent = "#".repeat(barLength);
+    if (barLength >= totalLength) {
+      clearInterval(interval);
+      progressDiv.classList.add("hidden");
       document.getElementById("steps").classList.remove("hidden");
-    });
+    }
+  }, 150); // speed of filling
+});
 
     // Excitement slider
     const excitement = document.getElementById("excitement");
@@ -258,4 +274,5 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
+
 
