@@ -76,7 +76,10 @@
   <pre id="terminal"></pre>
 
   <div id="proposal" class="hidden">
-    <h2>🔐 Authorization Request: Will you to CNE with me?</h2>
+    <h2>
+      🔐 Authorization Request: Will you to CNE with me?
+      <span class="cursor"></span>
+    </h2>
     <button id="accept">Grant Access ✅</button>
     <button id="deny">Deny ❌</button>
   </div>
@@ -131,8 +134,7 @@
         i++;
         setTimeout(typeLine, 1200);
       } else {
-        // Add blinking red cursor
-        terminal.innerHTML += "<span class='cursor'> </span>";
+        // Show the proposal (cursor is already in the heading)
         document.getElementById("proposal").classList.remove("hidden");
       }
     }
