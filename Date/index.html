@@ -1,110 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Authorization Request 💌</title>
+  <meta charset="UTF-8">
+  <title>Date Proposal - Access Request</title>
   <style>
     body {
-      background-color: #0a0a0a;
-      color: #ff4d6d;
-      font-family: 'Courier New', monospace;
+      background-color: #000;
+      color: #00ff99;
+      font-family: "Courier New", monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    h1, h2 {
       text-align: center;
-      padding: 50px;
     }
-
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 1.2em;
-      background-color: red;
-      margin-left: 2px;
-      animation: blink 1s steps(2, start) infinite;
-      vertical-align: bottom;
-    }
-
-    @keyframes blink {
-      to {
-        visibility: hidden;
-      }
-    }
-
-    .buttons {
-      margin-top: 20px;
-    }
+    .hidden { display: none; }
 
     button {
-      background-color: #1a1a1a;
-      color: #ff4d6d;
-      border: 1px solid #ff4d6d;
+      background: black;
+      color: #00ff99;
+      border: 1px solid #00ff99;
       padding: 10px 20px;
-      font-family: inherit;
+      margin: 10px;
       cursor: pointer;
-      margin: 5px;
-      border-radius: 5px;
-      transition: all 0.3s ease;
+      font-size: 16px;
     }
-
     button:hover {
-      background-color: #ff4d6d;
-      color: #fff;
+      background: #00ff99;
+      color: black;
     }
-
     #deny {
-      position: absolute;
+      position: relative;
     }
-
-    .hidden {
-      display: none;
+    .form-step {
+      margin: 15px 0;
     }
-
-    #progress {
-      font-size: 1.2rem;
+    input, select {
+      background: black;
+      color: #00ff99;
+      border: 1px solid #00ff99;
+      padding: 5px;
+      font-family: "Courier New", monospace;
+    }
+    #results {
+      border: 1px solid #00ff99;
+      padding: 20px;
       margin-top: 20px;
-      color: #ff4d6d;
+      background: rgba(0, 255, 100, 0.05);
+      width: 80%;
+      text-align: center;
+      white-space: pre-line;
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    /* Slim red blinking cursor */
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background-color: red;
+      margin-left: 4px;
+      animation: blink 1s steps(1) infinite;
+      vertical-align: bottom;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
     }
 
-    #progressBar {
-      color: pink;
+    /* Cat GIF container */
+    .cat-gif {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .cat-gif img {
+      max-width: 200px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 182, 193, 0.6);
     }
   </style>
 </head>
 <body>
-  <div id="proposal">
+  <h1>Initializing...</h1>
+  <pre id="terminal"></pre>
+
+  <div id="proposal" class="hidden">
     <h2>
       🔐 Authorization Request: Will you CNE with me?<span class="cursor"></span>
     </h2>
-    <div class="buttons">
-      <button id="accept">✅ Accept</button>
-      <button id="deny">❌ Deny</button>
-    </div>
+    <button id="accept">Grant Access ✅</button>
+    <button id="deny">Deny ❌</button>
+  </div>
+
+  <!-- 🐱 Cat Boba GIF -->
+  <div class="cat-gif hidden" id="catGif">
+    <img src="giphy.gif" alt="Cute cat drinking boba" />
   </div>
 
   <div id="progress" class="hidden">
-    Loading <span id="progressBar"></span>
+    ⏳ Deploying Access: [<span id="progressBar"></span>                    ]
   </div>
 
-  <div id="steps" class="hidden">
-    <h3>💖 Access Granted 💖</h3>
-    <p>Welcome, co-pilot for the CNE mission 🚀</p>
-  </div>
+  <form id="steps" class="hidden">
+    <div class="form-step">
+      📅 Date: <input type="date" id="dateTime" required>
+    </div>
+    <div class="form-step">
+      🍕 Choose Food:
+      <select id="food">
+        <option>Ramen</option>
+        <option>Pizza</option>
+        <option>Sushi</option>
+        <option>Korean BBQ</option>
+        <option>Korean Fried Chicken</option>
+        <option>Japanese BBQ</option>
+        <option>Tiramisu</option>
+
+      </select>
+    </div>
+    <div class="form-step">
+      🎬 Choose Movie:
+      <select id="movie">
+        <option>Action</option>
+        <option>Horror</option>
+        <option>Comedy</option>
+        <option>Your Pick ❤️</option>
+      </select>
+    </div>
+    <div class="form-step">
+      😍 Excitement Level:
+      <input type="range" id="excitement" min="0" max="100" value="50">
+      <span id="exciteValue">50%</span>
+    </div>
+    <button type="submit">Submit ✅</button>
+  </form>
+
+  <div id="results" class="hidden"></div>
+  <canvas id="confetti"></canvas>
 
   <script>
-    // Deny button escapes
+    // Terminal typing effect
+    const terminal = document.getElementById("terminal");
+    const introLines = [
+      "Scanning target: YOU 💙",
+      "Vulnerability detected: Single ❤️",
+      "Exploit available: Dinner + Movie",
+      "Deploying payload..."
+    ];
+    let i = 0, j = 0;
+
+    function typeChar() {
+      if (i < introLines.length) {
+        if (j < introLines[i].length) {
+          terminal.innerHTML += introLines[i][j];
+          j++;
+          setTimeout(typeChar, 50);
+        } else {
+          terminal.innerHTML += "<br>";
+          i++;
+          j = 0;
+          setTimeout(typeChar, 500);
+        }
+      } else {
+        document.getElementById("proposal").classList.remove("hidden");
+      }
+    }
+    setTimeout(typeChar, 1000);
+
+    // Deny button hover
     const denyBtn = document.getElementById("deny");
+    function spawnFakeDenies() {
+      for (let i = 0; i < 2; i++) {
+        const fake = denyBtn.cloneNode(true);
+        fake.style.position = "absolute";
+        fake.style.left = Math.random() * (window.innerWidth - 100) + "px";
+        fake.style.top = Math.random() * (window.innerHeight - 50) + "px";
+        fake.id = "fakeDeny" + Math.random().toString(36).substr(2, 5);
+        fake.addEventListener("mouseover", () => fake.remove());
+        document.body.appendChild(fake);
+      }
+    }
     denyBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
-      denyBtn.style.left = x + "px";
-      denyBtn.style.top = y + "px";
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 100 - 50;
+      const rotate = Math.random() * 30 - 15;
+      denyBtn.style.transition = "transform 0.3s ease";
+      denyBtn.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+      spawnFakeDenies();
     });
 
-    // Accept button triggers progress
+    // Accept -> Show form
     document.getElementById("accept").addEventListener("click", () => {
       document.getElementById("proposal").classList.add("hidden");
       const progressDiv = document.getElementById("progress");
@@ -112,17 +205,97 @@
       progressDiv.classList.remove("hidden");
 
       let barLength = 0;
-      const totalLength = 20; // number of hearts
+      const totalLength = 20;
       const interval = setInterval(() => {
         barLength++;
-        progressBar.textContent = "❤️".repeat(barLength);
+        progressBar.textContent = "💙".repeat(barLength);
         if (barLength >= totalLength) {
           clearInterval(interval);
           progressDiv.classList.add("hidden");
           document.getElementById("steps").classList.remove("hidden");
+
+          // 🎉 Show cat gif after progress
+          document.getElementById("catGif").classList.remove("hidden");
         }
-      }, 150); // speed
+      }, 150);
     });
+
+    // Excitement slider
+    const excitement = document.getElementById("excitement");
+    const exciteValue = document.getElementById("exciteValue");
+    excitement.addEventListener("input", () => {
+      exciteValue.textContent = excitement.value + "%";
+    });
+
+    // Form submission -> show results + confetti
+    document.getElementById("steps").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const dateTime = document.getElementById("dateTime").value;
+      const food = document.getElementById("food").value;
+      const movie = document.getElementById("movie").value;
+      const excitementLevel = document.getElementById("excitement").value;
+      const results = `
+[+] Date Selected: ${dateTime}
+[+] Food Choice: ${food}
+[+] Movie Choice: ${movie}
+[+] Excitement Level: ${excitementLevel}%
+STATUS: Exploit Successful ❤️
+      `;
+      document.getElementById("steps").classList.add("hidden");
+      document.getElementById("results").classList.remove("hidden");
+      document.getElementById("results").innerText = results;
+      launchConfetti();
+    });
+
+    // Confetti effect
+    const confettiCanvas = document.getElementById("confetti");
+    const ctx = confettiCanvas.getContext("2d");
+    let confettiParticles = [];
+
+    function resizeCanvas() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function launchConfetti() {
+      confettiParticles = [];
+      for (let i = 0; i < 150; i++) {
+        confettiParticles.push({
+          x: Math.random() * confettiCanvas.width,
+          y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+          r: Math.random() * 6 + 2,
+          d: Math.random() * 150 + 50,
+          color: `hsl(${Math.random()*360},100%,50%)`,
+          tilt: Math.random() * 10 - 10
+        });
+      }
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+      confettiParticles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+      updateConfetti();
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function updateConfetti() {
+      confettiParticles.forEach(p => {
+        p.y += Math.cos(p.d) + 2 + p.r/2;
+        p.x += Math.sin(p.d);
+        if (p.y > confettiCanvas.height) {
+          p.y = -10;
+          p.x = Math.random() * confettiCanvas.width;
+        }
+      });
+    }
   </script>
 </body>
 </html>
