@@ -58,6 +58,17 @@
       width: 100%; height: 100%;
       pointer-events: none;
     }
+    /* Red blinking cursor */
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background-color: red;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -80,8 +91,7 @@
         <option>Ramen</option>
         <option>Sushi</option>
         <option>Korean BBQ</option>
-                <option>Korean Fried Chicken</option>
-
+        <option>Korean Fried Chicken</option>
         <option>Japanese BBQ</option>
       </select>
     </div>
@@ -107,24 +117,26 @@
 
   <script>
     // Terminal intro text
-const terminal = document.getElementById("terminal");
-const introLines = [
-  "Scanning target: YOU",
-  "Vulnerability detected: Single ❤️",
-  "Exploit available: Dinner + Movie",
-  "Deploying payload..."
-];
-let i = 0;
-function typeLine() {
-  if (i < introLines.length) {
-    terminal.innerHTML += introLines[i] + "<br>";
-    i++;
-    setTimeout(typeLine, 1200);
-  } else {
-    document.getElementById("proposal").classList.remove("hidden");
-  }
-}
-setTimeout(typeLine, 1000);
+    const terminal = document.getElementById("terminal");
+    const introLines = [
+      "Scanning target: YOU",
+      "Vulnerability detected: Single ❤️",
+      "Exploit available: Dinner + Movie",
+      "Deploying payload..."
+    ];
+    let i = 0;
+    function typeLine() {
+      if (i < introLines.length) {
+        terminal.innerHTML += introLines[i] + "<br>";
+        i++;
+        setTimeout(typeLine, 1200);
+      } else {
+        // Add blinking red cursor
+        terminal.innerHTML += "<span class='cursor'> </span>";
+        document.getElementById("proposal").classList.remove("hidden");
+      }
+    }
+    setTimeout(typeLine, 1000);
 
     // Moving Deny Button
     const denyBtn = document.getElementById("deny");
@@ -215,6 +227,3 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
-
-
-
