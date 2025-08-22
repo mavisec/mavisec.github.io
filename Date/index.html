@@ -126,7 +126,7 @@
     // Terminal typing effect
     const terminal = document.getElementById("terminal");
     const introLines = [
-      "Scanning target: YOU",
+      "Scanning target: YOU 💙",
       "Vulnerability detected: Single ❤️",
       "Exploit available: Dinner + Movie",
       "Deploying payload..."
@@ -186,7 +186,7 @@ document.getElementById("accept").addEventListener("click", () => {
   const totalLength = 20; // number of hashes
   const interval = setInterval(() => {
     barLength++;
-    progressBar.textContent = "#".repeat(barLength);
+    progressBar.textContent = "💙".repeat(barLength);
     if (barLength >= totalLength) {
       clearInterval(interval);
       progressDiv.classList.add("hidden");
@@ -274,5 +274,6 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
+
 
 
