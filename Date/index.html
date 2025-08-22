@@ -127,18 +127,27 @@
       "Exploit available: Dinner + Movie",
       "Deploying payload..."
     ];
-    let i = 0;
-    function typeLine() {
-      if (i < introLines.length) {
-        terminal.innerHTML += introLines[i] + "<br>";
-        i++;
-        setTimeout(typeLine, 1200);
-      } else {
-        // Show the proposal (cursor is already in the heading)
-        document.getElementById("proposal").classList.remove("hidden");
-      }
+ let i = 0;
+let j = 0;
+
+function typeChar() {
+  if (i < introLines.length) {
+    if (j < introLines[i].length) {
+      terminal.innerHTML += introLines[i][j];
+      j++;
+      setTimeout(typeChar, 50); // typing speed per character
+    } else {
+      terminal.innerHTML += "<br>";
+      i++;
+      j = 0;
+      setTimeout(typeChar, 500); // delay between lines
     }
-    setTimeout(typeLine, 1000);
+  } else {
+    document.getElementById("proposal").classList.remove("hidden");
+  }
+}
+
+setTimeout(typeChar, 1000);
 
     // Moving Deny Button
     const denyBtn = document.getElementById("deny");
@@ -229,3 +238,4 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
+
