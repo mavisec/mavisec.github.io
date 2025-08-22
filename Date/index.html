@@ -5,6 +5,16 @@
   <title>Date Proposal - Access Request</title>
   <style>
     body {
+      .giphy.gif {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.giphy.gif img {
+  max-width: 200px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(255, 182, 193, 0.6);
+}
       background-color: #000;
       color: #00ff99;
       font-family: "Courier New", monospace;
@@ -85,6 +95,9 @@
     <button id="accept">Grant Access ✅</button>
     <button id="deny">Deny ❌</button>
   </div>
+  <div class="cat-gif hidden" id="catGif">
+  <img src="cat-boba.gif" alt="Cute cat drinking boba" />
+</div>
 <div id="progress" class="hidden">
   ⏳ Deploying Access: [<span id="progressBar"></span>                    ]
 </div>
@@ -183,7 +196,7 @@ document.getElementById("accept").addEventListener("click", () => {
   progressDiv.classList.remove("hidden");
 
   let barLength = 0;
-  const totalLength = 20; // number of hashes
+  const totalLength = 20; // number of hearts
   const interval = setInterval(() => {
     barLength++;
     progressBar.textContent = "💙".repeat(barLength);
@@ -191,6 +204,9 @@ document.getElementById("accept").addEventListener("click", () => {
       clearInterval(interval);
       progressDiv.classList.add("hidden");
       document.getElementById("steps").classList.remove("hidden");
+
+      // 🎉 show cat gif
+      document.getElementById("giphy.gif").classList.remove("hidden");
     }
   }, 150); // speed of filling
 });
@@ -274,6 +290,7 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
+
 
 
 
