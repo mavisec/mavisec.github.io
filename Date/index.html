@@ -150,12 +150,13 @@ function typeChar() {
 setTimeout(typeChar, 1000);
 
     // Moving Deny Button
-    const denyBtn = document.getElementById("deny");
-    denyBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 100 - 50;
-      denyBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+denyBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 100 - 50;
+  const rotate = Math.random() * 30 - 15; // small spin
+  denyBtn.style.transition = "transform 0.3s ease";
+  denyBtn.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+});
 
     // Accept -> Show Form
     document.getElementById("accept").addEventListener("click", () => {
@@ -238,4 +239,5 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
+
 
