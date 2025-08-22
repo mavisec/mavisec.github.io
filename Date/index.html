@@ -51,6 +51,8 @@
       margin-top: 20px;
       background: rgba(0, 255, 100, 0.05);
       width: 80%;
+      text-align: center;
+      white-space: pre-line;
     }
     canvas {
       position: fixed;
@@ -77,7 +79,7 @@
 
   <div id="proposal" class="hidden">
     <h2>
-      🔐 Authorization Request: Will you to CNE with me?
+      🔐 Authorization Request: Will you CNE with me?
       <span class="cursor"></span>
     </h2>
     <button id="accept">Grant Access ✅</button>
@@ -119,7 +121,7 @@
   <canvas id="confetti"></canvas>
 
   <script>
-    // Terminal intro text
+    // Terminal typing effect
     const terminal = document.getElementById("terminal");
     const introLines = [
       "Scanning target: YOU",
@@ -127,51 +129,51 @@
       "Exploit available: Dinner + Movie",
       "Deploying payload..."
     ];
- let i = 0;
-let j = 0;
+    let i = 0, j = 0;
 
-function typeChar() {
-  if (i < introLines.length) {
-    if (j < introLines[i].length) {
-      terminal.innerHTML += introLines[i][j];
-      j++;
-      setTimeout(typeChar, 50); // typing speed per character
-    } else {
-      terminal.innerHTML += "<br>";
-      i++;
-      j = 0;
-      setTimeout(typeChar, 500); // delay between lines
+    function typeChar() {
+      if (i < introLines.length) {
+        if (j < introLines[i].length) {
+          terminal.innerHTML += introLines[i][j];
+          j++;
+          setTimeout(typeChar, 50);
+        } else {
+          terminal.innerHTML += "<br>";
+          i++;
+          j = 0;
+          setTimeout(typeChar, 500);
+        }
+      } else {
+        document.getElementById("proposal").classList.remove("hidden");
+      }
     }
-  } else {
-    document.getElementById("proposal").classList.remove("hidden");
-  }
-}
 
-setTimeout(typeChar, 1000);
+    setTimeout(typeChar, 1000);
 
-    // Moving Deny Button
-denyBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 100 - 50;
-  const rotate = Math.random() * 30 - 15; // small spin
-  denyBtn.style.transition = "transform 0.3s ease";
-  denyBtn.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
-});
+    // Deny button hover
+    const denyBtn = document.getElementById("deny");
+    denyBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 100 - 50;
+      const rotate = Math.random() * 30 - 15;
+      denyBtn.style.transition = "transform 0.3s ease";
+      denyBtn.style.transform = `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+    });
 
-    // Accept -> Show Form
+    // Accept -> Show form
     document.getElementById("accept").addEventListener("click", () => {
       document.getElementById("proposal").classList.add("hidden");
       document.getElementById("steps").classList.remove("hidden");
     });
 
-    // Excitement slider value
+    // Excitement slider
     const excitement = document.getElementById("excitement");
     const exciteValue = document.getElementById("exciteValue");
     excitement.addEventListener("input", () => {
       exciteValue.textContent = excitement.value + "%";
     });
 
-    // Form submit -> Show results
+    // Form submission -> show results + confetti
     document.getElementById("steps").addEventListener("submit", (e) => {
       e.preventDefault();
       const dateTime = document.getElementById("dateTime").value;
@@ -191,16 +193,18 @@ STATUS: Exploit Successful ❤️
       launchConfetti();
     });
 
-    // Confetti
+    // Confetti effect
     const confettiCanvas = document.getElementById("confetti");
     const ctx = confettiCanvas.getContext("2d");
     let confettiParticles = [];
+
     function resizeCanvas() {
       confettiCanvas.width = window.innerWidth;
       confettiCanvas.height = window.innerHeight;
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
+
     function launchConfetti() {
       confettiParticles = [];
       for (let i = 0; i < 150; i++) {
@@ -215,17 +219,19 @@ STATUS: Exploit Successful ❤️
       }
       requestAnimationFrame(drawConfetti);
     }
+
     function drawConfetti() {
       ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
       confettiParticles.forEach(p => {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, false);
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
         ctx.fillStyle = p.color;
         ctx.fill();
       });
       updateConfetti();
       requestAnimationFrame(drawConfetti);
     }
+
     function updateConfetti() {
       confettiParticles.forEach(p => {
         p.y += Math.cos(p.d) + 2 + p.r/2;
@@ -239,5 +245,3 @@ STATUS: Exploit Successful ❤️
   </script>
 </body>
 </html>
-
-
