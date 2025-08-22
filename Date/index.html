@@ -38,7 +38,7 @@
     .form-step {
       margin: 15px 0;
     }
-    input, select {
+    input, select, textarea {
       background: black;
       color: #00ff99;
       border: 1px solid #00ff99;
@@ -58,16 +58,15 @@
       width: 100%; height: 100%;
       pointer-events: none;
     }
-    /* Red blinking cursor */
-    .cursor {
+    .blinking-cursor {
       display: inline-block;
       width: 10px;
+      height: 20px;
       background-color: red;
-      animation: blink 1s steps(1) infinite;
+      animation: blink 1s step-start infinite;
     }
     @keyframes blink {
-      0%, 50% { opacity: 1; }
-      50.01%, 100% { opacity: 0; }
+      50% { background-color: transparent; }
     }
   </style>
 </head>
@@ -76,17 +75,14 @@
   <pre id="terminal"></pre>
 
   <div id="proposal" class="hidden">
-    <h2>
-      🔐 Authorization Request: Will you to CNE with me?
-      <span class="cursor"></span>
-    </h2>
+    <h2>🔐 Authorization Request: Will you to CNE with me?<span class="blinking-cursor"></span></h2>
     <button id="accept">Grant Access ✅</button>
     <button id="deny">Deny ❌</button>
   </div>
 
   <form id="steps" class="hidden">
     <div class="form-step">
-📅 Date: <input type="date" id="dateTime" required>
+      📅 Date: <input type="date" id="dateTime" required>
     </div>
     <div class="form-step">
       🍕 Choose Food:
@@ -112,6 +108,10 @@
       <input type="range" id="excitement" min="0" max="100" value="50">
       <span id="exciteValue">50%</span>
     </div>
+    <div class="form-step">
+      💬 Your Message:
+      <textarea id="userMessage" rows="4" placeholder="Type your message here..."></textarea>
+    </div>
     <button type="submit">Submit ✅</button>
   </form>
 
@@ -119,7 +119,6 @@
   <canvas id="confetti"></canvas>
 
   <script>
-    // Terminal intro text
     const terminal = document.getElementById("terminal");
     const introLines = [
       "Scanning target: YOU",
@@ -134,13 +133,11 @@
         i++;
         setTimeout(typeLine, 1200);
       } else {
-        // Show the proposal (cursor is already in the heading)
         document.getElementById("proposal").classList.remove("hidden");
       }
     }
     setTimeout(typeLine, 1000);
 
-    // Moving Deny Button
     const denyBtn = document.getElementById("deny");
     denyBtn.addEventListener("mouseover", () => {
       const x = Math.random() * 200 - 100;
@@ -148,31 +145,30 @@
       denyBtn.style.transform = `translate(${x}px, ${y}px)`;
     });
 
-    // Accept -> Show Form
     document.getElementById("accept").addEventListener("click", () => {
       document.getElementById("proposal").classList.add("hidden");
       document.getElementById("steps").classList.remove("hidden");
     });
 
-    // Excitement slider value
     const excitement = document.getElementById("excitement");
     const exciteValue = document.getElementById("exciteValue");
     excitement.addEventListener("input", () => {
       exciteValue.textContent = excitement.value + "%";
     });
 
-    // Form submit -> Show results
     document.getElementById("steps").addEventListener("submit", (e) => {
       e.preventDefault();
       const dateTime = document.getElementById("dateTime").value;
       const food = document.getElementById("food").value;
       const movie = document.getElementById("movie").value;
       const excitementLevel = document.getElementById("excitement").value;
+      const userMessage = document.getElementById("userMessage").value;
       const results = `
 [+] Date Selected: ${dateTime}
 [+] Food Choice: ${food}
 [+] Movie Choice: ${movie}
 [+] Excitement Level: ${excitementLevel}%
+[+] Your Message: ${userMessage}
 STATUS: Exploit Successful ❤️
       `;
       document.getElementById("steps").classList.add("hidden");
@@ -181,7 +177,6 @@ STATUS: Exploit Successful ❤️
       launchConfetti();
     });
 
-    // Confetti
     const confettiCanvas = document.getElementById("confetti");
     const ctx = confettiCanvas.getContext("2d");
     let confettiParticles = [];
