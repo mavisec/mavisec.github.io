@@ -1,161 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
   
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-  <title>
-    mavisec :: posts :: 🔓 Cracking Open JWTs (Ethically) — How to Decode, Inspect, and Test Them with jwt.io
-  </title>
     
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="keywords"
-    content="mavisec, cybersecurity, jwt, web security, authentication, pentesting"
-  />
-  <meta name="robots" content="noodp" />
-  <link rel="canonical" href="index.html" />
-  <link rel="stylesheet" href="../../assets/style.css" />
+      <title>
+        mavisec :: posts :: 🔑 Cracking Open JWTs (Ethically) with jwt.io
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link
-    rel="icon"
-    sizes="144x144"
-    href="/img/mavisec-short.png"
-  />
-  <link rel="shortcut icon" href="img/mavisec-short.png" />
+<meta
+  name="keywords"
+  content="mavisec, cybersecurity, jwt, web security, authentication, pentesting"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="index.html" />
 
-  <meta property="og:title" content="🔓 Cracking Open JWTs (Ethically) — How to Decode, Inspect, and Test Them with jwt.io" />
-  <meta property="og:description" content="Learn what JSON Web Tokens are, how to decode them using jwt.io, and how pentesters ethically inspect and test JWTs." />
-  <meta property="og:type" content="article" />
-</head>
+<link rel="stylesheet" href="../../assets/style.css" />
 
-<body class="">
-  <div class="container">
-    <header class="header">
-      <span class="header__inner">
-        <a href="../../" class="logo" style="text-decoration: none;">
-          <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
-            <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
-          </svg></span>
-          <span class="logo__text">mavisec/</span>
-          <span class="logo__text" style="color:red">posts/</span>
-          <span class="logo__cursor"></span>
-        </a>
-      </span>
-    </header>
+<link
+  rel="icon"
+  sizes="144x144"
+  href="/img/mavisec-short.png"
+/>
+<link rel="shortcut icon" href="img/mavisec-short.png" />
 
-    <div class="content">
-      <div class="post">
-        <h1 class="post-title">🔓 Cracking Open JWTs (Ethically): How to Decode, Inspect, and Test Them with jwt.io</h1>
-        <div class="post-meta">
-          <span class="post-date">2025-08-23</span>
-        </div>
+<link href="../../assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="../../assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
 
-        <span class="post-tags">
-          <a href="">#JWT</a>&nbsp;
-          <a href="">#WebSecurity</a>&nbsp;
-          <a href="">#Pentesting</a>&nbsp;
+<meta property="og:title" content="🔑 Cracking Open JWTs (Ethically) with jwt.io" />
+<meta property="og:description" content="A beginner-friendly guide on JWTs: what they are, how to decode them, and how to test them using jwt.io." />
+<meta property="og:type" content="article" />
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="../../"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text">
+      mavisec/</span>
+    <span class="logo__text" style="color:red">posts/</span>
+    <span class="logo__cursor"></span>
+
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    <li><a href="../">blog</a></li>
+    <li><a href="../../hacktivity/">hacktivity</a></li>
+    <li><a href="../../resume/">resume</a></li>
+    <li><a href="../../whoami/">whoami</a></li>
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    <li><a href="../">blog</a></li>
+    <li><a href="../../hacktivity/">hacktivity</a></li>
+    <li><a href="../../resume/">resume</a></li>
+    <li><a href="../../whoami/">whoami</a></li>
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
         </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
 
-        <div class="post-content">
+      </span>
+    </span>
+  </span>
+</header>
 
-          <p><strong>JSON Web Tokens (JWTs)</strong> are everywhere—powering logins, APIs, and sessions. As a hacker or pentester, learning how to <em>decode, inspect, and test them</em> is essential. In this post, we’ll crack open JWTs the ethical way, using <a href="https://jwt.io" target="_blank">jwt.io</a>.</p>
+      <div class="content">
+  
+  <div class="post">
+    <h1 class="post-title">🔑 Cracking Open JWTs (Ethically) with jwt.io</h1>
+    <div class="post-meta">
+        <span class="post-date">
+          2025-08-23
+        </span>
+    </div>
 
-          <hr />
+    <span class="post-tags">
+      <a href="">#JWT</a>&nbsp;
+      <a href="">#WebSecurity</a>&nbsp;
+      <a href="">#Pentesting</a>&nbsp;
+    </span>
 
-          <h2>🔹 What is a JWT?</h2>
-          <p>A JWT is split into three parts separated by dots:</p>
-          <pre><code>&lt;header&gt;.&lt;payload&gt;.&lt;signature&gt;</code></pre>
-          <ul>
-            <li><strong>Header</strong>: contains metadata like algorithm (<code>alg</code>) and type (<code>typ</code>).</li>
-            <li><strong>Payload</strong>: contains claims (e.g., username, roles, expiration). Remember—it’s <em>encoded, not encrypted</em>.</li>
-            <li><strong>Signature</strong>: prevents tampering by verifying integrity.</li>
-          </ul>
+    <div class="post-content">
 
-          <hr />
+<p>When I first started learning web security, I kept running into <strong>JSON Web Tokens (JWTs)</strong>. They were everywhere—APIs, login systems, even mobile apps. At first, they looked like just random gibberish strings, but learning how to decode them with <a href="https://jwt.io" target="_blank">jwt.io</a> turned out to be a game-changer.</p>
 
-          <h2>🔹 Example Token</h2>
-          <pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiYWRtaW4iOnRydWV9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
-          <p>When decoded (Base64URL), you can read:</p>
-          <pre><code>{
+<hr />
+
+<h2>🔹 What is a JWT?</h2>
+<p>A JWT is a string that looks like this:</p>
+<pre><code>xxxxx.yyyyy.zzzzz</code></pre>
+<p>It’s split into three parts:</p>
+<ul>
+  <li><strong>Header</strong> → algorithm & token type</li>
+  <li><strong>Payload</strong> → claims like user ID, roles, expiry</li>
+  <li><strong>Signature</strong> → makes sure the token hasn’t been tampered with</li>
+</ul>
+
+<p>Important: the payload is only <em>Base64URL-encoded</em>, not encrypted. That means anyone who gets the token can read the claims.</p>
+
+<hr />
+
+<h2>🔹 Example JWT</h2>
+<pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoibWF2aXNlYyIsInJvbGUiOiJhZG1pbiJ9.j8BoUQtYVvA7VJxV0W9NRh9A7HcT12znpAhJ1yDqqL0</code></pre>
+
+<p>If we decode the first two parts, we get:</p>
+
+<pre><code>{
   "alg": "HS256",
   "typ": "JWT"
 }
 
 {
-  "username": "admin",
-  "admin": true
-}</code></pre>
+  "user": "mavisec",
+  "role": "admin"
+}
+</code></pre>
 
-          <hr />
+<p>Already you can see why this matters—tokens often contain juicy info like usernames, roles, and expiry times.</p>
 
-          <h2>🔹 Decoding with jwt.io</h2>
-          <p>The fastest way to decode JWTs is with <a href="https://jwt.io" target="_blank">jwt.io</a>. Just paste your token and instantly see:</p>
-          <ul>
-            <li>The <strong>header</strong> (algorithm, type).</li>
-            <li>The <strong>payload</strong> (claims like user info, roles, expiry).</li>
-            <li>How the <strong>signature</strong> changes when you modify data.</li>
-          </ul>
+<hr />
 
-          <hr />
+<h2>🔹 Using jwt.io to Decode</h2>
+<p>The easiest way to inspect JWTs is with <strong><a href="https://jwt.io" target="_blank">jwt.io</a></strong>:</p>
+<ol>
+  <li>Go to the site</li>
+  <li>Paste your JWT into the left box</li>
+  <li>See the header & payload instantly decoded</li>
+</ol>
 
-          <h2>🔹 Inspecting JWTs (The Hacker’s Angle)</h2>
-          <p>Why bother decoding JWTs? Because they can reveal:</p>
-          <ul>
-            <li>Hidden user details like <code>"role": "admin"</code>.</li>
-            <li>Expiration times (<code>exp</code>).</li>
-            <li>Weak or misconfigured algorithms (like <code>alg: none</code>).</li>
-          </ul>
-          <p>As a pentester, just reading the payload can give you valuable recon data about the app you’re testing.</p>
+<p>If you also have the secret (in case of weak configs), jwt.io lets you verify the signature too.</p>
 
-          <hr />
+<hr />
 
-          <h2>🔹 Simple Tests You Can Try</h2>
-          <ul>
-            <li><strong>Change claims</strong>: Edit <code>"role":"user"</code> to <code>"role":"admin"</code> and see if the app accepts it.</li>
-            <li><strong>Check expiry</strong>: Test if expired tokens are still valid.</li>
-            <li><strong>Look for weak configs</strong>: If you see <code>alg: none</code>, that’s a red flag.</li>
-          </ul>
-          <p><em>Note: Always do this ethically, in labs or with permission.</em></p>
+<h2>🔹 Why Pentesters Care</h2>
+<ul>
+  <li>JWTs can leak sensitive info in payloads</li>
+  <li>Weak secrets (like <code>secret</code> or <code>password</code>) can be brute-forced</li>
+  <li>Some apps don’t validate signatures properly</li>
+  <li>Changing <code>alg</code> from <code>HS256</code> to <code>none</code> still works on misconfigured apps</li>
+</ul>
 
-          <hr />
+<p>Even if you’re not exploiting, just decoding JWTs can help you map user roles, session expiry, or hidden claims.</p>
 
-          <h2>🔹 Defensive Tips</h2>
-          <p>Because this is about ethical hacking, here’s how devs should defend:</p>
-          <ul>
-            <li>Always validate signatures server-side.</li>
-            <li>Use strong secrets or proper key pairs.</li>
-            <li>Never allow <code>alg: none</code>.</li>
-            <li>Keep tokens short-lived and refresh securely.</li>
-          </ul>
+<hr />
 
-          <hr />
+<h2>🔹 Key Takeaways</h2>
+<p>Learning JWT basics gave me a solid foundation for testing modern web apps. You don’t need to be a crypto wizard to start—just knowing how to spot, decode, and read them already gives you an edge.</p>
 
-          <h2>🔹 Key Takeaways</h2>
-          <ul>
-            <li>JWTs are common in modern apps.</li>
-            <li>They’re <em>encoded, not encrypted</em>—so decoding is trivial.</li>
-            <li>jwt.io makes exploring tokens fast and easy.</li>
-            <li>Even beginners can test for simple issues like role manipulation or weak algorithms.</li>
-          </ul>
+<p>✅ <strong>Final Tip</strong>: Always check if JWTs show up in <code>Authorization</code> headers, cookies, or local storage. Decode them. You might find something useful.</p>
 
-          <p>Thanks for reading! If you found this useful, consider <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
-        </div>
+<hr />
 
+<p>Thanks for reading this post! If you like my work, you can support me by <a href="https://www.buymeacoffee.com/mavisec">buying me a pizza</a>. 🍕</p>
+
+    </div>
+    
+    <div class="pagination">
+      <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+      </div>
+      <div class="pagination__buttons">
+        <span class="button previous">
+          <a href="../ligolo/">
+            <span class="button__icon">←</span>
+            <span class="button__text">🚀 How Ligolo-ng Helped Me Pass the OSCP</span>
+          </a>
+        </span>
+        <span class="button next">
+          <a href="../sickos/">
+            <span class="button__text">SICKOS: 1.2 Walkthrough 🤒</span>
+            <span class="button__icon">→</span>
+          </a>
+        </span>
       </div>
     </div>
-
-    <footer class="footer">
-      <div class="footer__inner">
-        <div class="copyright">
-          <span>© 2021-2025</span>
-        </div>
-        <div>       
-          <span>
-            <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">license</a>
-          </span>
-        </div>
-      </div>
-    </footer>
+    
   </div>
-</body>
+</div>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="copyright">
+      <span>© 2021-2025</span>
+    </div>
+    <div>       
+      <span>
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">license</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/main.js"></script>
+<script src="../../assets/prism.js"></script>
+      
+    </div>
+  </body>
 </html>
